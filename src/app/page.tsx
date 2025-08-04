@@ -83,6 +83,8 @@ export default function Home() {
         </div>
       ) : (
         <div className="bg-black text-white min-h-screen" style={{ fontFamily: "Roboto, Open Sans, sans-serif" }}>
+
+
           {/* Header */}
           <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/30 border-b border-green-900/40 shadow-md">
             <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -126,6 +128,7 @@ export default function Home() {
               </nav>
             )}
           </header>
+
 
           {/* Hero Section */}
           <section id="hero" className="relative h-screen flex justify-center items-center text-center px-6 transition duration-1000 ease-in-out">
@@ -214,12 +217,18 @@ export default function Home() {
               About the Service
               </h3>
               <p className="text-green-100 text-lg leading-relaxed text-justify animate-fadeIn">
-      Join an unforgettable safari experience in Udawalawe with Nuwan, a knowledgeable and friendly local guide who has been exploring the park for years. Nuwan offers half-day and full-day safaris that are perfectly timed to catch the best animal sightings, all while ensuring your comfort and safety. Whether it’s your first safari or one of many, Nuwan’s deep understanding of the area and its wildlife will make your journey both exciting and educational.
+                Join an unforgettable safari experience in Udawalawe with Nuwan, a knowledgeable and friendly local guide who has been exploring 
+                the park for years. Nuwan offers half-day and full-day safaris that are perfectly timed to catch the best animal sightings, all 
+                while ensuring your comfort and safety. Whether it’s your first safari or one of many, Nuwan’s deep understanding of the area and 
+                its wildlife will make your journey both exciting and educational.
               <br /><br />
-      Travel in a well-maintained, comfortable 4x4 jeep with plenty of space for photography and viewing. With Nuwan’s sharp eye and experience, you’re likely to spot a wide range of wildlife—from herds of elephants and water buffalo to crocodiles, deer, and many bird species. His local insights add great value to the tour, helping you understand animal behaviors, park history, and the delicate balance of Udawalawe’s ecosystem.
+                Travel in a well-maintained, comfortable 4x4 jeep with plenty of space for photography and viewing. With Nuwan’s sharp eye and experience, 
+                you’re likely to spot a wide range of wildlife—from herds of elephants and water buffalo to crocodiles, deer, and many bird species. His 
+                local insights add great value to the tour, helping you understand animal behaviors, park history, and the delicate balance of Udawalawe’s ecosystem.
               <br /><br />
               </p>
             </section>
+
 
           {/* Packages */}
           <section
@@ -229,8 +238,10 @@ export default function Home() {
           >
             {/* Subtle Background */}
             <div className="absolute inset-0 pointer-events-none z-0">
+
               {/* Soft dark gradient overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-black/30 to-green-800/20 opacity-70" />
+
               {/* Decorative pattern */}
               <svg
                 className="absolute right-0 bottom-0 w-40 h-40 opacity-20"
@@ -283,6 +294,7 @@ export default function Home() {
                     <Icon icon="mdi:clock-outline" className="inline mr-1" />
                     {pkg.duration}
                   </div>
+
                   {/* Subtle shimmer effect on hover */}
                   <div className="absolute inset-0 pointer-events-none rounded-xl group-hover:bg-gradient-to-r group-hover:from-green-400/10 group-hover:to-green-700/10 transition duration-500" />
                 </div>
@@ -290,10 +302,18 @@ export default function Home() {
             </div>
           </section>
 
-            {/* Modal */}
+            {/* Packages Popup Modal */}
             {selectedPackage && (
               <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[999] flex justify-center items-center p-6">
               <div className="bg-neutral-900 border border-green-900 rounded-lg p-7 w-full max-w-md text-center relative animate-fadeInUp shadow-2xl">
+                {/* Close Button (top right) */}
+                <button
+                onClick={() => setSelectedPackage(null)}
+                className="absolute top-3 right-3 text-green-400 hover:text-green-200 transition"
+                aria-label="Close"
+                >
+                <Icon icon="mdi:close" className="w-6 h-6" />
+                </button>
                 {(() => {
                 const pkg = packages.find(p => p.title === selectedPackage);
                 if (!pkg) return null;
@@ -308,29 +328,24 @@ export default function Home() {
                     <span>Duration: {pkg.duration}</span>
                   </div>
                   <a
-                    href="https://wa.me/94776103421?text=I'm%20interested%20in%20your%20safari%20tours.%20Can%20you%20tell%20me%20more%3F"
+                    href={`https://wa.me/94776103421?text=${encodeURIComponent(
+                    `Hello, I am interested in the ${pkg.title} safari package. Could you please provide more information, including pricing and availability?`
+                    )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 mt-4 bg-green-700 hover:bg-green-800 text-white px-7 py-3 rounded-xl shadow font-semibold text-lg transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400"
                   >
-                    <Icon icon="mdi:calendar-check" className="w-6 h-6" />
-                    Book Now
+                    <Icon icon="mdi:chat" className="w-6 h-6" />
+                    Contact Us for Details
                   </a>
                   </>
                 );
                 })()}
-                <button
-                onClick={() => setSelectedPackage(null)}
-                className="absolute top-3 right-3 text-green-400 hover:text-green-200"
-                aria-label="Close"
-                >
-                <Icon icon="mdi:close" className="w-6 h-6" />
-                </button>
               </div>
               </div>
             )}
 
-
+            {/* Gallery Section */}
             <section
               id="gallery"
               className="max-w-6xl mx-auto px-6 py-20 mt-20 animate-fadeInUp"
@@ -355,132 +370,193 @@ export default function Home() {
               >
               Gallery
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((img, idx) => (
-                <div
-                key={img}
-                className="relative overflow-hidden rounded-xl shadow-lg group opacity-0 scale-95 cursor-pointer"
-                style={{
-                  transition: "opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1)",
-                  transitionDelay: `${idx * 120}ms`
-                }}
-                ref={el => {
-                  if (!el) return;
-                  const onScroll = () => {
-                  const rect = el.getBoundingClientRect();
-                  if (rect.top < window.innerHeight - 80) {
-                    el.style.opacity = "1";
-                    el.style.transform = "scale(1)";
+                {/* Gallery Images Data */}
+                {(() => {
+                const galleryImages = [
+                  {
+                  src: "/assets/gallery/1.jpeg",
+                  alt: "Elephants grazing in Udawalawa",
+                  description: "you’re likely to spot a wide range of wildlife—from herds of elephants and water buffalo to crocodiles, deer, and many bird species. His local insights add great value to the tour, helping you understand animal behaviors, park history, and the delicate balance of Udawalawe’s ecosystem."
+                  },
+                  {
+                  src: "/assets/gallery/2.jpeg",
+                  alt: "Safari jeep crossing a stream",
+                  description: "Safari jeep crossing a shallow stream during the adventure."
+                  },
+                  {
+                  src: "/assets/gallery/3.jpeg",
+                  alt: "Water buffalo in the wild",
+                  description: "Water buffalo cooling off in the wetlands of Udawalawa."
+                  },
+                  {
+                  src: "/assets/gallery/4.jpeg",
+                  alt: "Crocodile sunbathing",
+                  description: "A crocodile sunbathing on the banks of a river."
+                  },
+                  {
+                  src: "/assets/gallery/5.jpeg",
+                  alt: "Colorful birds perched",
+                  description: "Colorful birds perched on a tree branch, a common sight in the park."
+                  },
+                  {
+                  src: "/assets/gallery/6.jpeg",
+                  alt: "Deer in the grasslands",
+                  description: "A group of deer grazing in the open grasslands."
+                  },
+                  {
+                  src: "/assets/gallery/7.jpeg",
+                  alt: "Safari guide Nuwan spotting wildlife",
+                  description: "Safari guide Nuwan using binoculars to spot distant wildlife."
+                  },
+                  {
+                  src: "/assets/gallery/8.jpeg",
+                  alt: "Sunset over Udawalawa",
+                  description: "A breathtaking sunset over the Udawalawa landscape."
                   }
-                  };
-                  window.addEventListener("scroll", onScroll);
-                  onScroll();
-                  return () => window.removeEventListener("scroll", onScroll);
-                }}
-                onClick={() => setZoomedImage(`/assets/gallery/${img}.jpeg`)}
-                >
-                <img
-                  src={`/assets/gallery/${img}.jpeg`}
-                  alt={`Gallery ${img}`}
-                  className="object-cover w-full h-44 md:h-56 transform group-hover:scale-110 transition duration-500 ease-in-out"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
-                  <Icon icon="mdi:magnify" className="text-white w-6 h-6 animate-fadeInScale" />
-                </div>
-                <style jsx>{`
-                  .animate-fadeInScale {
-                  animation: fadeInScale 0.5s cubic-bezier(.4,0,.2,1);
-                  }
-                  @keyframes fadeInScale {
-                  from {
-                    opacity: 0;
-                    transform: scale(0.8);
-                  }
-                  to {
-                    opacity: 1;
-                    transform: scale(1);
-                  }
-                  }
-                `}</style>
-                </div>
-              ))}
-              </div>
-            </section>
+                ];
 
-            {/* Gallery Zoom Modal */}
-            {typeof window !== "undefined" && zoomedImage && (
-              <>
-                <div
-                  className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center animate-fadeInUp"
-                  onClick={() => setZoomedImage(null)}
-                  onTouchStart={e => {
-                    const touchStartX = e.touches[0].clientX;
-                    const touchStartY = e.touches[0].clientY;
-                    const handleTouchEnd = (ev: TouchEvent) => {
-                      const touchEndX = ev.changedTouches[0].clientX;
-                      const touchEndY = ev.changedTouches[0].clientY;
-                      if (
-                        Math.abs(touchEndX - touchStartX) > 50 ||
-                        Math.abs(touchEndY - touchStartY) > 50
-                      ) {
-                        setZoomedImage(null);
+                return (
+                  <>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {galleryImages.map((img, idx) => (
+                    <div
+                      key={img.src}
+                      className="relative overflow-hidden rounded-xl shadow-lg group opacity-0 scale-95 cursor-pointer"
+                      style={{
+                      transition: "opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1)",
+                      transitionDelay: `${idx * 120}ms`
+                      }}
+                      ref={el => {
+                      if (!el) return;
+                      const onScroll = () => {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top < window.innerHeight - 80) {
+                        el.style.opacity = "1";
+                        el.style.transform = "scale(1)";
+                        }
+                      };
+                      window.addEventListener("scroll", onScroll);
+                      onScroll();
+                      return () => window.removeEventListener("scroll", onScroll);
+                      }}
+                      onClick={() => setZoomedImage(img.src)}
+                    >
+                      <img
+                      src={img.src}
+                      alt={img.alt}
+                      loading="lazy"
+                      className="object-cover w-full h-44 md:h-56 transform group-hover:scale-110 transition duration-500 ease-in-out"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500 flex items-center justify-center">
+                      <Icon icon="mdi:magnify" className="text-white w-6 h-6 animate-fadeInScale" />
+                      </div>
+                      <style jsx>{`
+                      .animate-fadeInScale {
+                        animation: fadeInScale 0.5s cubic-bezier(.4,0,.2,1);
                       }
-                      window.removeEventListener("touchend", handleTouchEnd);
-                    };
-                    window.addEventListener("touchend", handleTouchEnd);
-                  }}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className="relative max-w-3xl w-full flex flex-col items-center"></div>
-                  <img
-                    src={zoomedImage}
-                    alt="Zoomed Gallery"
-                    className="rounded-xl shadow-2xl max-h-[80vh] w-auto object-contain animate-zoomIn"
-                    onClick={e => {
-                      e.stopPropagation();
-                      setZoomedImage(null);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-                <style jsx>{`
-                  .animate-fadeInUp {
-                    animation: fadeInUp 0.5s cubic-bezier(.4,0,.2,1);
-                  }
-                  @keyframes fadeInUp {
-                    from {
-                      opacity: 0;
-                      transform: translateY(30px);
-                    }
-                    to {
-                      opacity: 1;
-                      transform: translateY(0);
-                    }
-                  }
-                  .animate-zoomIn {
-                    animation: zoomIn 0.5s cubic-bezier(.4,0,.2,1);
-                  }
-                  @keyframes zoomIn {
-                    from {
-                      opacity: 0;
-                      transform: scale(0.8);
-                    }
-                    to {
-                      opacity: 1;
-                      transform: scale(1);
-                    }
-                  }
-                `}</style>
-              </>
-            )}
-          <a
-            href="https://wa.me/94776103421?text=I'm%20interested%20in%20your%20safari%20tours.%20Can%20you%20tell%20me%20more%3F"
-            target="_blank"
-            className="fixed bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg z-50"
-            aria-label="WhatsApp Chat"
-          >
-            <Icon icon="mdi:whatsapp" className="w-6 h-6" />
-          </a>
+                      @keyframes fadeInScale {
+                        from {
+                        opacity: 0;
+                        transform: scale(0.8);
+                        }
+                        to {
+                        opacity: 1;
+                        transform: scale(1);
+                        }
+                      }
+                      `}</style>
+                    </div>
+                    ))}
+                  </div>
+
+                  {/* Gallery Zoom Modal */}
+                  {typeof window !== "undefined" && zoomedImage && (() => {
+                    const img = galleryImages.find(i => i.src === zoomedImage);
+                    return (
+                    <>
+                      <div
+                      className="fixed inset-0 bg-black/80 z-[9999] flex items-center justify-center animate-fadeInUp"
+                      onClick={() => setZoomedImage(null)}
+                      onTouchStart={e => {
+                        const touchStartX = e.touches[0].clientX;
+                        const touchStartY = e.touches[0].clientY;
+                        const handleTouchEnd = (ev: TouchEvent) => {
+                        const touchEndX = ev.changedTouches[0].clientX;
+                        const touchEndY = ev.changedTouches[0].clientY;
+                        if (
+                          Math.abs(touchEndX - touchStartX) > 50 ||
+                          Math.abs(touchEndY - touchStartY) > 50
+                        ) {
+                          setZoomedImage(null);
+                        }
+                        window.removeEventListener("touchend", handleTouchEnd);
+                        };
+                        window.addEventListener("touchend", handleTouchEnd);
+                      }}
+                      style={{ cursor: "pointer" }}
+                      >
+                      <div className="relative max-w-3xl w-full flex flex-col items-center justify-center">
+                        <img
+                        src={img?.src}
+                        alt={img?.alt}
+                        loading="lazy"
+                        className="rounded-xl shadow-2xl max-h-[80vh] w-auto object-contain animate-zoomIn mx-auto"
+                        onClick={e => {
+                          e.stopPropagation();
+                          setZoomedImage(null);
+                        }}
+                        style={{ cursor: "pointer", display: "block" }}
+                        />
+                        {img?.description && (
+                        <div className="mt-6 text-green-100 text-lg text-center bg-black/60 px-6 py-4 rounded-xl shadow-lg animate-fadeInUp max-w-2xl">
+                          {img.description}
+                        </div>
+                        )}
+                      </div>
+                      </div>
+                      <style jsx>{`
+                      .animate-fadeInUp {
+                        animation: fadeInUp 0.5s cubic-bezier(.4,0,.2,1);
+                      }
+                      @keyframes fadeInUp {
+                        from {
+                        opacity: 0;
+                        transform: translateY(30px);
+                        }
+                        to {
+                        opacity: 1;
+                        transform: translateY(0);
+                        }
+                      }
+                      .animate-zoomIn {
+                        animation: zoomIn 0.5s cubic-bezier(.4,0,.2,1);
+                      }
+                      @keyframes zoomIn {
+                        from {
+                        opacity: 0;
+                        transform: scale(0.8);
+                        }
+                        to {
+                        opacity: 1;
+                        transform: scale(1);
+                        }
+                      }
+                      `}</style>
+                    </>
+                    );
+                  })()}
+                  </>
+                );
+                })()}
+            </section>
+            <a
+              href="https://wa.me/94776103421?text=Hello%2C%20I%20would%20like%20to%20chat%20about%20Udawalawa%20Safari%20by%20Nuwan."
+              target="_blank"
+              className="fixed bottom-8 right-8 bg-green-600 hover:bg-green-700 text-white p-4 rounded-full shadow-lg z-50"
+              aria-label="WhatsApp Chat"
+            >
+              <Icon icon="mdi:whatsapp" className="w-6 h-6" />
+            </a>
 
             {/* Contact & Footer */}
             <section
