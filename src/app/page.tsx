@@ -549,6 +549,8 @@ export default function Home() {
                 );
                 })()}
             </section>
+
+            {/* WhatsApp Chat Button */}
             <a
               href="https://wa.me/94776103421?text=Hello%2C%20I%20would%20like%20to%20chat%20about%20Udawalawa%20Safari%20by%20Nuwan."
               target="_blank"
