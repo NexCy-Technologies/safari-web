@@ -13,6 +13,7 @@
     "@fortawesome/free-brands-svg-icons": "^7.0.0",
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@iconify/react": "^6.0.0",
+    "firebase": "^12.1.0",
     "lucide-react": "^0.536.0",
     "next": "15.4.5",
     "react": "19.1.0",

@@ -3,14 +3,14 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import Image from "next/image";
+import GalleryAndReviews from '../components/GalleryAndReviews';
+
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [currentHero, setCurrentHero] = useState(0);
   const [selectedPackage, setSelectedPackage] = useState<string | null>(null);
-  const [zoomedImage, setZoomedImage] = useState<string | null>(null);
   const [scrollY, setScrollY] = useState(0);
 
   const scrollTo = (id: string) => {
@@ -487,138 +487,9 @@ export default function Home() {
           )}
 
           {/* Gallery Section */}
-          <section
-            id="gallery"
-            className="max-w-7xl mx-auto px-6 py-20 mt-20"
-          >
-            <div className="text-center mb-16">
-              <h3
-                style={{ fontFamily: "Merriweather, serif" }}
-                className="text-4xl md:text-5xl text-green-200 mb-4 font-bold"
-              >
-                Safari Gallery
-              </h3>
-              <div className="w-24 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto rounded-full"></div>
-              <p className="text-green-100 text-lg mt-6 max-w-2xl mx-auto">
-                Discover the incredible wildlife and breathtaking moments captured during our safari adventures
-              </p>
-            </div>
-            
-            {(() => {
-              const galleryImages = [
-                {
-                  src: "/assets/gallery/1.jpeg",
-                  alt: "Elephants grazing in Udawalawa",
-                  description: "Majestic elephants grazing peacefully in their natural habitat, showcasing the incredible biodiversity of Udawalawa National Park."
-                },
-                {
-                  src: "/assets/gallery/2.jpeg",
-                  alt: "Safari jeep crossing a stream",
-                  description: "Our comfortable 4x4 safari jeep navigating through the park's diverse terrain during an adventure."
-                },
-                {
-                  src: "/assets/gallery/3.jpeg",
-                  alt: "Water buffalo in the wild",
-                  description: "Water buffalo cooling off in the wetlands, demonstrating the park's rich ecosystem and water sources."
-                },
-                {
-                  src: "/assets/gallery/4.jpeg",
-                  alt: "Crocodile sunbathing",
-                  description: "A crocodile basking in the sun on the riverbank, one of the many reptilian residents of the park."
-                },
-                {
-                  src: "/assets/gallery/5.jpeg",
-                  alt: "Colorful birds perched",
-                  description: "Vibrant tropical birds perched on branches, highlighting the park's incredible avian diversity."
-                },
-                {
-                  src: "/assets/gallery/6.jpeg",
-                  alt: "Deer in the grasslands",
-                  description: "Graceful deer grazing in the open grasslands, perfectly adapted to the park's savanna environment."
-                },
-                {
-                  src: "/assets/gallery/7.jpeg",
-                  alt: "Safari guide Nuwan spotting wildlife",
-                  description: "Expert guide Nuwan using professional equipment to spot and identify wildlife for an enhanced safari experience."
-                }
-              ];
-
-              return (
-                <>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {galleryImages.map((img, idx) => (
-                      <div
-                        key={img.src}
-                        className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 border border-green-900/30 hover:border-green-700/50"
-                        onClick={() => setZoomedImage(img.src)}
-                      >
-                        <img
-                          src={img.src}
-                          alt={img.alt}
-                          loading="lazy"
-                          className="object-cover w-full h-48 md:h-64 group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                          <Icon icon="mdi:magnify-plus" className="w-8 h-8 text-green-400" />
-                        </div>
-                      </div>
-                    ))}
-                    
-                    {/* See More Card */}
-                    <div
-                      className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 border border-green-900/30 hover:border-green-700/50 bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center"
-                      onClick={() => window.open('https://udawalawasafari.lk', '_blank')}
-                    >
-                      <div className="text-center p-6">
-                        <Icon icon="mdi:camera-plus" className="w-12 h-12 text-green-400 mb-4 mx-auto group-hover:scale-110 transition-transform duration-300" />
-                        <h4 className="text-green-200 font-semibold text-lg mb-2" style={{ fontFamily: "Merriweather, serif" }}>
-                          See More
-                        </h4>
-                        <p className="text-green-300 text-sm">
-                          Visit our website for complete gallery
-                        </p>
-                        <div className="mt-4 text-green-400 text-xs font-medium">
-                          udawalawasafari.lk
-                        </div>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-green-800/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    </div>
-                  </div>
-
-                  {/* Gallery Zoom Modal */}
-                  {zoomedImage && (() => {
-                    const img = galleryImages.find(i => i.src === zoomedImage);
-                    return (
-                      <div
-                        className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-6 animate-fadeInUp"
-                        onClick={() => setZoomedImage(null)}
-                      >
-                        <div className="relative max-w-4xl w-full">
-                          <button
-                            onClick={() => setZoomedImage(null)}
-                            className="absolute top-4 right-4 z-10 text-green-300 hover:text-green-400 transition-colors duration-300 p-2 rounded-full bg-black/50 backdrop-blur-sm"
-                          >
-                            <Icon icon="mdi:close" className="w-8 h-8" />
-                          </button>
-                          <img
-                            src={img?.src}
-                            alt={img?.alt}
-                            loading="lazy"
-                            className="rounded-2xl shadow-2xl max-h-[80vh] w-auto object-contain mx-auto animate-zoomIn border border-green-900/30"
-                          />
-                          {img?.description && (
-                            <div className="mt-6 text-green-100 text-center bg-black/80 backdrop-blur-sm px-6 py-4 rounded-2xl shadow-lg animate-fadeInUp max-w-2xl mx-auto border border-green-900/30">
-                              <p className="text-lg leading-relaxed">{img.description}</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </>
-              );
-            })()}
-          </section>
+          <div id="gallery">
+            <GalleryAndReviews />
+          </div>
 
           {/* WhatsApp Chat Button */}
           <a
