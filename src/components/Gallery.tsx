@@ -37,17 +37,22 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
 
       const q = query(collection(db, "gallery"), orderBy("timestamp", "desc"));
       const querySnapshot = await getDocs(q);
-      const galleryImages: GalleryImage[] = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        imageUrl: doc.data().imageUrl,
-        description: doc.data().description,
-        alt: doc.data().alt,
-        timestamp: doc.data().timestamp?.toDate() || new Date(),
-        featured: doc.data().featured || false,
-      }));
+      const galleryImages: GalleryImage[] = querySnapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          imageUrl: data.imageUrl,
+          description: data.description,
+          alt: data.alt,
+          timestamp: data.timestamp?.seconds
+            ? new Date(data.timestamp.seconds * 1000)
+            : new Date(),
+          featured: data.featured || false,
+        };
+      });
 
       setImages(galleryImages);
-      setDisplayedImages(galleryImages.slice(0, 7));
+      setDisplayedImages(galleryImages.slice(0, 8));
     } catch (err) {
       console.error("Error loading gallery:", err);
       setError("Failed to load gallery images");
@@ -88,32 +93,34 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
   const ImageSkeleton = () => (
     <div className="bg-gray-800/50 rounded-2xl animate-pulse border border-green-900/30">
       <div className="w-full aspect-[4/3] bg-gray-700/50 rounded-2xl"></div>
+      <div className="p-3 text-sm text-gray-500">Loading...</div>
     </div>
   );
 
   const ImageCard: React.FC<{ image: GalleryImage }> = ({ image }) => (
     <div
-      className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 border border-green-900/30 hover:border-green-700/50"
+      className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border border-green-900/30"
       onClick={() => handleImageClick(image)}
-      style={{ aspectRatio: "4/3" }}
+      style={{ aspectRatio: "4/3", willChange: "transform" }}
     >
       <img
         src={image.imageUrl}
         alt={image.alt}
         loading="lazy"
-        className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+        className="object-cover w-full h-full"
+        style={{ display: "block", backfaceVisibility: "hidden" }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-        <Icon icon="mdi:magnify-plus" className="w-8 h-8 text-green-400" />
+      <div className="p-3 bg-black/70 text-green-100 text-sm">
+        {image.description}
       </div>
     </div>
   );
 
   const SeeMoreCard = () => (
     <div
-      className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20 border border-green-900/30 hover:border-green-700/50 bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center"
+      className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer transform transition-all duration-500 hover:scale-105 hover:shadow-2xl border border-green-900/30 hover:border-green-700/50 bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center"
       onClick={handleSeeMore}
-      style={{ aspectRatio: "4/3" }}
+      style={{ aspectRatio: "4/3", willChange: "transform" }}
     >
       <div className="text-center p-6">
         <Icon
@@ -127,11 +134,10 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
           See More
         </h4>
         <p className="text-green-300 text-sm mb-2">
-          {images.length - 7} more photos
+          {images.length - 8} more photos
         </p>
         <div className="text-green-400 text-xs font-medium">udawalawasafari.lk</div>
       </div>
-      <div className="absolute inset-0 bg-gradient-to-br from-green-900/20 via-transparent to-green-800/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
     </div>
   );
 
@@ -183,7 +189,7 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
                 {displayedImages.map((image) => (
                   <ImageCard key={image.id} image={image} />
                 ))}
-                {!isExpanded && images.length > 7 && <SeeMoreCard />}
+                {!isExpanded && images.length > 8 && <SeeMoreCard />}
               </>
             )}
         </div>
