@@ -4,6 +4,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import GalleryAndReviews from '../components/GalleryAndReviews';
+import Seo from "@/components/Seo";
 
 
 export default function Home() {
@@ -78,6 +79,13 @@ export default function Home() {
 
   return (
     <>
+      <Seo
+        title="Udawalawa Jeep Safari Service by Nuwan"
+        description="Experience expertly guided wildlife safaris with Nuwan—delivering exceptional service, in-depth local knowledge, and lasting memories in Sri Lanka's premier wildlife destination. Safari in Udawalawa, safari Sri Lanka, Nuwan Safari, jeep safari, wildlife tour."
+        url="https://udawalawasafari.lk"
+        image="/favicon.ico"
+      />
+
       <Head>
         <title>Udawalawa Safari by Nuwan</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
