@@ -188,9 +188,9 @@ export default function Home() {
                   Udawalawa Safari
                 </h1>
 
-                {/* Centered Navigation */}
-                <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
-                  <div className="flex gap-12 text-green-200 font-medium">
+                {/* Responsive Navigation */}
+                <nav className="hidden md:flex flex-1 justify-end items-center">
+                  <div className="flex gap-8 text-green-200 font-medium">
                     {["about", "packages", "gallery", "contact"].map((section, index) => (
                       <button
                         key={section}
