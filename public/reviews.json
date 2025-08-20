@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "author": "John Doe",
+    "rating": 5,
+    "date": "2 weeks ago",
+    "text": "Amazing experience!",
+    "profileImage": "https://example.com/photo.jpg"
+  },
+  {
+    "id": "2",
+    "author": "Jane Smith",
+    "rating": 4,
+    "date": "1 month ago",
+    "text": "Great service!",
+    "profileImage": "https://example.com/photo2.jpg"
+  }
+]

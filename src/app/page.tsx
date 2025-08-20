@@ -38,10 +38,10 @@ export default function Home() {
   }, []);
 
   const heroImages = [
-    "/assets/hero1.jpeg",
-    "/assets/hero2.jpeg",
-    "/assets/hero3.jpeg",
-    "/assets/hero4.jpeg",
+    "/assets/hero1.webp",
+    "/assets/hero2.webp",
+    "/assets/hero3.webp",
+    "/assets/hero4.webp",
   ];
 
   const packages = [
@@ -249,7 +249,7 @@ export default function Home() {
                 <div
                   key={index}
                   className={`absolute inset-0 w-full h-full transition-all duration-1000 ${
-                    index === currentHero ? "opacity-70 scale-100 z-10" : "opacity-0 scale-105 z-0"
+                    index === currentHero ? "opacity-90 scale-100 z-10" : "opacity-0 scale-105 z-0"
                   }`}
                 >
                   <img

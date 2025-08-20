@@ -11,7 +11,6 @@ const GalleryAndReviews: React.FC = () => {
       <Gallery className="mt-20" />
       
       {/* Reviews Section */}
-      <Reviews />
     </>
   );
 };
