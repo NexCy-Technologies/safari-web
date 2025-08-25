@@ -38,10 +38,10 @@ export default function Home() {
   }, []);
 
   const heroImages = [
-    "/assets/hero1.webp",
-    "/assets/hero2.webp",
-    "/assets/hero3.webp",
-    "/assets/hero4.webp",
+    "/assets/hero1.jpeg",
+    "/assets/hero2.jpeg",
+    "/assets/hero3.jpeg",
+    "/assets/hero4.jpeg",
   ];
 
   const packages = [
@@ -243,7 +243,11 @@ export default function Home() {
           </header>
 
           {/* Hero Section */}
-          <section id="hero" className="relative h-screen flex justify-center items-center text-center px-6 overflow-hidden">
+          <section
+            id="hero"
+            className="relative min-h-screen flex justify-center items-center text-center px-[clamp(1rem,3vw,2rem)] overflow-hidden"
+          >
+            {/* Background */}
             <div className="absolute inset-0 w-full h-full">
               {heroImages.map((src, index) => (
                 <div
@@ -262,68 +266,75 @@ export default function Home() {
               ))}
               <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-transparent to-black/60 z-15" />
             </div>
-            
+
             {/* Hero Content */}
-            <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 max-w-6xl mx-auto">
-              <div className="mb-8 animate-fadeInUp">
-                <div className="flex items-center justify-center space-x-4 mb-6">
-                  <Icon icon="mdi:paw" className="w-8 h-8 text-green-400 animate-bounce" />
-                  <span className="text-green-300 text-lg font-medium tracking-wider uppercase">Wildlife Adventure Awaits</span>
-                  <Icon icon="mdi:paw" className="w-8 h-8 text-green-400 animate-bounce delay-200" />
+            <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-[clamp(0.5rem,2vw,1.5rem)] max-w-[95vw] md:max-w-6xl mx-auto">
+              {/* Tagline */}
+              <div className="mb-[clamp(1rem,2vw,2rem)] animate-fadeInUp">
+                <div className="flex items-center justify-center gap-[clamp(0.5rem,1vw,1rem)] mb-[clamp(0.75rem,1.5vw,1.5rem)] text-[clamp(0.7rem,1.2vw,1rem)]">
+                  <Icon icon="mdi:paw" className="w-[clamp(1rem,1.5vw,1.5rem)] h-[clamp(1rem,1.5vw,1.5rem)] text-green-400 animate-bounce" />
+                  <span className="text-green-300 font-medium tracking-wider uppercase">
+                    Wildlife Adventure Awaits
+                  </span>
+                  <Icon icon="mdi:paw" className="w-[clamp(1rem,1.5vw,1.5rem)] h-[clamp(1rem,1.5vw,1.5rem)] text-green-400 animate-bounce delay-200" />
                 </div>
               </div>
-              
+
+              {/* Title */}
               <h2
                 style={{ fontFamily: "Merriweather, serif" }}
-                className="text-5xl md:text-7xl text-white mb-6 drop-shadow-2xl animate-fadeInUp font-bold tracking-tight leading-tight"
+                className="text-[clamp(2rem,5vw,4.5rem)] leading-[clamp(2.5rem,6vw,5rem)] text-white mb-[clamp(1rem,2vw,1.5rem)] drop-shadow-2xl animate-fadeInUp font-bold tracking-tight"
               >
-                <span className="block mb-2">Discover the</span>
+                <span className="block">Discover the</span>
                 <span className="bg-gradient-to-r from-green-400 via-green-300 to-green-200 bg-clip-text text-transparent animate-gradient">
                   Untamed Beauty
                 </span>
-                <span className="block mt-2 text-green-100">of Udawalawa</span>
+                <span className="block text-green-100 mt-[clamp(0.5rem,1vw,1rem)]">of Udawalawa</span>
               </h2>
-              
-              <p className="text-xl md:text-2xl text-green-100 mb-10 leading-relaxed drop-shadow-lg max-w-4xl animate-fadeInUp delay-300">
-                Experience expertly guided wildlife safaris with Nuwan—delivering exceptional service, in-depth local knowledge, and lasting memories in Sri Lanka's premier wildlife destination.
+
+              {/* Subtitle */}
+              <p className="text-[clamp(0.9rem,1.5vw,1.25rem)] text-green-100 mb-[clamp(1rem,3vw,2.5rem)] leading-relaxed drop-shadow-lg max-w-[85ch] animate-fadeInUp delay-300 px-[clamp(0.5rem,2vw,1rem)]">
+                Experience expertly guided wildlife safaris with Nuwan—delivering exceptional service,
+                in-depth local knowledge, and lasting memories in Sri Lanka's premier wildlife destination.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 animate-fadeInUp delay-500">
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-[clamp(0.5rem,1vw,1rem)] animate-fadeInUp delay-500 w-full sm:w-auto px-[clamp(0.5rem,2vw,1rem)]">
                 <a
                   href="https://wa.me/94776103421?text=I'm%20interested%20in%20your%20safari%20tours.%20Can%20you%20tell%20me%20more%3F"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold px-8 py-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-green-500/20 text-lg border border-green-400/20"
+                  className="inline-flex items-center justify-center gap-[clamp(0.5rem,1vw,1rem)] bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold px-[clamp(1.5rem,3vw,2rem)] py-[clamp(0.75rem,1.5vw,1rem)] rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-green-500/20 text-[clamp(0.9rem,1.2vw,1.1rem)] border border-green-400/20"
                 >
-                  <Icon icon="mdi:jeepney" className="w-6 h-6" />
+                  <Icon icon="mdi:jeepney" className="w-[clamp(1.2rem,1.8vw,1.5rem)] h-[clamp(1.2rem,1.8vw,1.5rem)]" />
                   Reserve Safari
                 </a>
                 <button
                   onClick={() => scrollTo("packages")}
-                  className="inline-flex items-center justify-center gap-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold px-8 py-4 rounded-full border-2 border-green-400/30 hover:border-green-400/50 transition-all duration-300 hover:scale-105 text-lg"
+                  className="inline-flex items-center justify-center gap-[clamp(0.5rem,1vw,1rem)] bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold px-[clamp(1.5rem,3vw,2rem)] py-[clamp(0.75rem,1.5vw,1rem)] rounded-full border-2 border-green-400/30 hover:border-green-400/50 transition-all duration-300 hover:scale-105 text-[clamp(0.9rem,1.2vw,1.1rem)]"
                 >
-                  <Icon icon="mdi:compass" className="w-6 h-6" />
+                  <Icon icon="mdi:compass" className="w-[clamp(1.2rem,1.8vw,1.5rem)] h-[clamp(1.2rem,1.8vw,1.5rem)]" />
                   View Packages
                 </button>
               </div>
             </div>
 
             {/* Hero Navigation Dots */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+            <div className="absolute bottom-[clamp(1rem,2vw,2rem)] left-1/2 transform -translate-x-1/2 flex gap-[clamp(0.4rem,0.8vw,0.75rem)] z-20">
               {heroImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentHero(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === currentHero 
-                      ? 'bg-green-400 scale-125 shadow-lg shadow-green-400/50' 
-                      : 'bg-white/40 hover:bg-white/60'
+                  className={`w-[clamp(0.5rem,0.8vw,0.75rem)] h-[clamp(0.5rem,0.8vw,0.75rem)] rounded-full transition-all duration-300 ${
+                    index === currentHero
+                      ? "bg-green-400 scale-125 shadow-lg shadow-green-400/50"
+                      : "bg-white/40 hover:bg-white/60"
                   }`}
                 />
               ))}
             </div>
           </section>
-
+          
           {/* About Section */}
           <section
             id="about"
