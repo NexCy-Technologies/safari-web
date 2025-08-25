@@ -139,13 +139,13 @@ export default function Home() {
               : "bg-transparent"
           }`}
         >
-          <div className="max-w-[90rem] mx-auto px-3 sm:px-4 md:px-6 lg:px-10 xl:px-16 2xl:px-24 py-3 sm:py-4 flex justify-between items-center">
+          <div className="max-w-[90rem] mx-auto px-3 sm:px-4 md:px-6 lg:px-10 xl:px-12 2xl:px-16 py-2 sm:py-3 flex justify-between items-center">
             {/* Logo */}
             <div
               onClick={() => scrollTo("hero")}
               className="flex items-center gap-2 sm:gap-3 cursor-pointer select-none group"
             >
-              <div className="relative w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12">
+              <div className="relative w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-11 lg:h-11">
                 <img
                   src="/logo.png"
                   alt="Udawalawa Safari By Nuwan Logo"
@@ -153,7 +153,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-green-400/20 rounded-full blur-md group-hover:bg-green-300/30 transition-all duration-300"></div>
               </div>
-              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl tracking-wide text-green-100 hover:text-green-300 transition-all duration-300 transform hover:scale-105 font-bold font-serif">
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-[1.65rem] 2xl:text-[1.8rem] tracking-wide text-green-100 hover:text-green-300 transition-all duration-300 transform hover:scale-105 font-bold font-serif">
                 Udawalawa Safari
               </h1>
             </div>
@@ -168,7 +168,7 @@ export default function Home() {
               >
                 <Icon
                   icon={menuOpen ? "mdi:close" : "mdi:menu"}
-                  className="text-green-300 w-6 h-6 transition-transform duration-300 group-hover:scale-110"
+                  className="text-green-300 w-6 h-6 transition-transform duration-300"
                 />
               </button>
 
@@ -193,13 +193,13 @@ export default function Home() {
               </nav>
 
               {/* Horizontal menu for tablets/desktops */}
-              <nav className="hidden lg:flex gap-6 xl:gap-10 uppercase tracking-wide font-semibold text-green-100">
+              <nav className="hidden lg:flex gap-5 xl:gap-7 2xl:gap-8 uppercase tracking-wide font-medium text-green-100">
                 {["About", "Packages", "Gallery", "Reviews", "Contact"].map(
                   (section) => (
                     <button
                       key={section}
                       onClick={() => scrollTo(section.toLowerCase())}
-                      className="px-2 xl:px-3 py-2 hover:text-green-300 transition-all duration-300 hover:scale-105"
+                      className="px-2 py-2 hover:text-green-300 transition-all duration-300 hover:scale-105"
                     >
                       {section}
                     </button>
@@ -209,6 +209,7 @@ export default function Home() {
             </div>
           </div>
         </header>
+
         {/* Hero Section */}
         <section
           id="hero"
@@ -233,35 +234,35 @@ export default function Home() {
                 />
               </div>
             ))}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/50 z-15" />
-            <div className="absolute inset-0 backdrop-blur-[0.5px] bg-gradient-to-br from-green-900/15 via-transparent to-emerald-900/20 z-16" />
+            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/50 z-10" />
+            <div className="absolute inset-0 backdrop-blur-[0.5px] bg-gradient-to-br from-green-900/15 via-transparent to-emerald-900/20 z-10" />
           </div>
 
           {/* Content */}
-          <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-2 sm:px-4 max-w-[90rem] mx-auto">
-            <div className="backdrop-blur-[2px] bg-black/20 border border-green-500/30 rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-12 shadow-2xl max-w-full sm:max-w-4xl lg:max-w-6xl">
-              {/* Small intro */}
-              <div className="mb-4 sm:mb-6 animate-fadeInUp">
-                <div className="flex items-center justify-center gap-2 sm:gap-3 mb-2 sm:mb-4 text-xs sm:text-sm">
-                  <Icon icon="mdi:paw" className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 animate-bounce" />
-                  <span className="text-green-300 font-medium tracking-wider uppercase">
-                    Wild Adventure Awaits
-                  </span>
-                  <Icon icon="mdi:leaf" className="w-4 h-4 sm:w-5 sm:h-5 text-green-400 animate-bounce delay-200" />
-                </div>
-              </div>
-
+          <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-2 sm:px-4 max-w-5xl mx-auto">
+            <div className="backdrop-blur-[2px] bg-black/20 border border-green-500/30 rounded-2xl sm:rounded-3xl p-4 sm:p-8 md:p-10 lg:p-12 shadow-2xl w-full">
               {/* Title */}
-              <h2 className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-tight text-white mb-3 sm:mb-6 drop-shadow-2xl animate-fadeInUp font-bold tracking-tight font-serif">
+              <h2
+                className="font-serif font-bold tracking-tight drop-shadow-2xl text-white mb-4 sm:mb-6 animate-fadeInUp leading-tight"
+                style={{
+                  fontSize: "clamp(1.75rem, 4vw, 4.5rem)", // scales from 28px → 72px
+                }}
+              >
                 <span className="block">Experience the</span>
                 <span className="bg-gradient-to-r from-green-400 via-emerald-300 to-lime-300 bg-clip-text text-transparent animate-gradient">
                   Wild Safari
                 </span>
-                <span className="block text-green-100 mt-1 sm:mt-2">of Udawalawa</span>
+                <span className="block text-green-100 mt-2">of Udawalawa</span>
               </h2>
 
               {/* Subtitle */}
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-green-100 mb-4 sm:mb-8 leading-relaxed drop-shadow-lg max-w-lg sm:max-w-2xl md:max-w-4xl animate-fadeInUp delay-300">
+              <p
+                className="text-green-100 mb-6 sm:mb-8 leading-relaxed drop-shadow-lg animate-fadeInUp delay-300 mx-auto"
+                style={{
+                  fontSize: "clamp(0.9rem, 1.6vw, 1.25rem)", // scales 14px → 20px
+                  maxWidth: "60ch", // keeps lines readable
+                }}
+              >
                 Embark on an unforgettable journey through Sri Lanka's untamed wilderness
                 with expert guide Nuwan—where every moment brings you closer to nature's
                 most magnificent creatures.
@@ -273,14 +274,14 @@ export default function Home() {
                   href="https://wa.me/94776103421?text=I'm%20interested%20in%20your%20wild%20safari%20tours.%20Can%20you%20tell%20me%20more%3F"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-green-500/20 text-sm sm:text-base md:text-lg border border-green-400/20 backdrop-blur-sm"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-700 hover:to-emerald-600 text-white font-semibold px-5 sm:px-7 md:px-8 py-3 sm:py-4 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-green-500/20 text-sm sm:text-base md:text-lg border border-green-400/20 backdrop-blur-sm"
                 >
                   <Icon icon="mdi:jeepney" className="w-5 h-5 sm:w-6 sm:h-6" />
                   Book Wild Safari
                 </a>
                 <button
                   onClick={() => scrollTo("packages")}
-                  className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold px-5 sm:px-8 py-3 sm:py-4 rounded-full border-2 border-green-400/30 hover:border-green-400/50 transition-all duration-300 hover:scale-105 text-sm sm:text-base md:text-lg"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold px-5 sm:px-7 md:px-8 py-3 sm:py-4 rounded-full border-2 border-green-400/30 hover:border-green-400/50 transition-all duration-300 hover:scale-105 text-sm sm:text-base md:text-lg"
                 >
                   <Icon icon="mdi:binoculars" className="w-5 h-5 sm:w-6 sm:h-6" />
                   Explore Packages
@@ -290,7 +291,7 @@ export default function Home() {
           </div>
 
           {/* Dots */}
-          <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
+          <div className="absolute bottom-5 sm:bottom-7 md:bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 sm:gap-3 z-20">
             {heroImages.map((_, index) => (
               <button
                 key={index}

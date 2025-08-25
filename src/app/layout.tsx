@@ -36,11 +36,11 @@ export const metadata: Metadata = {
     title: "Udawalawa Jeep Safari Service by Nuwan",
     description:
       "Experience expertly guided wildlife safaris with Nuwan in Udawalawa, Sri Lanka. Comfortable, safe, and memorable adventures.",
-    url: "https://golden-pearl-safari-villa.web.app",
+    url: "https://www.udawalawasafari.lk/",
     siteName: "Udawalawa Jeep Safari",
     images: [
       {
-        url: "https://golden-pearl-safari-villa.web.app/og-image.jpg",
+        url: "https://www.udawalawasafari.lk//og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Udawalawa Jeep Safari",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "Udawalawa Jeep Safari Service by Nuwan",
     description:
       "Expertly guided wildlife safaris in Udawalawa, Sri Lanka with Nuwan. Book your adventure today!",
-    images: ["https://golden-pearl-safari-villa.web.app/og-image.jpg"],
+    images: ["https://www.udawalawasafari.lk//og-image.jpg"],
   },
   verification: {
     google: "your-google-verification-code", // Replace with your GSC code
@@ -63,7 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased`}>
       <head>
-        <link rel="canonical" href="https://golden-pearl-safari-villa.web.app" />
+        <link rel="canonical" href="https://www.udawalawasafari.lk/" />
         <meta
           name="robots"
           content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
