@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: 'export',
   reactStrictMode: true,
-  output: "export", // <-- Add this for static export
   images: {
     domains: ["firebasestorage.googleapis.com"],
   },
