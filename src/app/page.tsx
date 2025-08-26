@@ -469,7 +469,7 @@ export default function Home() {
 
                     <a
                       href={`https://wa.me/94776103421?text=${encodeURIComponent(
-                        `Hello, I am interested in the ${pkg.title} safari package. Could you please provide more information, including pricing and availability?`
+                        `Hello, I am interested in the ${pkg.title} package. Could you please provide more information, including pricing and availability?`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
