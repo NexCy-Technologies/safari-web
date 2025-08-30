@@ -31,12 +31,7 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const heroImages = [
-    "/assets/hero1.jpeg",
-    "/assets/hero2.jpeg",
-    "/assets/hero3.jpeg",
-    "/assets/hero4.jpeg",
-  ]
+  const heroImages = ["/assets/hero1.jpeg", "/assets/hero2.jpeg", "/assets/hero3.jpeg", "/assets/hero4.jpeg"]
 
   const packages = [
     {
@@ -134,9 +129,7 @@ export default function Home() {
         {/* Navbar */}
         <header
           className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${
-            scrollY > 50
-              ? "backdrop-blur-2xl bg-black/30 shadow-2xl border-b border-green-500/30"
-              : "bg-transparent"
+            scrollY > 50 ? "backdrop-blur-2xl bg-black/30 shadow-2xl border-b border-green-500/30" : "bg-transparent"
           }`}
         >
           <div className="max-w-[90rem] mx-auto px-3 sm:px-4 md:px-6 lg:px-10 xl:px-12 2xl:px-16 py-2 sm:py-3 flex justify-between items-center">
@@ -178,33 +171,29 @@ export default function Home() {
                   menuOpen ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"
                 }`}
               >
-                {["About", "Packages", "Gallery", "Reviews", "Contact"].map(
-                  (section, index) => (
-                    <button
-                      key={section}
-                      onClick={() => scrollTo(section.toLowerCase())}
-                      className="py-3 px-4 rounded-xl hover:text-green-300 hover:bg-green-900/20 transition-all duration-300 transform hover:scale-105"
-                      style={{ transitionDelay: `${index * 0.05}s` }}
-                    >
-                      {section}
-                    </button>
-                  )
-                )}
+                {["About", "Packages", "Gallery", "Reviews", "Contact"].map((section, index) => (
+                  <button
+                    key={section}
+                    onClick={() => scrollTo(section.toLowerCase())}
+                    className="py-3 px-4 rounded-xl hover:text-green-300 hover:bg-green-900/20 transition-all duration-300 transform hover:scale-105"
+                    style={{ transitionDelay: `${index * 0.05}s` }}
+                  >
+                    {section}
+                  </button>
+                ))}
               </nav>
 
               {/* Horizontal menu for tablets/desktops */}
               <nav className="hidden lg:flex gap-5 xl:gap-7 2xl:gap-8 uppercase tracking-wide font-medium text-green-100">
-                {["About", "Packages", "Gallery", "Reviews", "Contact"].map(
-                  (section) => (
-                    <button
-                      key={section}
-                      onClick={() => scrollTo(section.toLowerCase())}
-                      className="px-2 py-2 hover:text-green-300 transition-all duration-300 hover:scale-105"
-                    >
-                      {section}
-                    </button>
-                  )
-                )}
+                {["About", "Packages", "Gallery", "Reviews", "Contact"].map((section) => (
+                  <button
+                    key={section}
+                    onClick={() => scrollTo(section.toLowerCase())}
+                    className="px-2 py-2 hover:text-green-300 transition-all duration-300 hover:scale-105"
+                  >
+                    {section}
+                  </button>
+                ))}
               </nav>
             </div>
           </div>
@@ -221,9 +210,7 @@ export default function Home() {
               <div
                 key={index}
                 className={`absolute inset-0 w-full h-full transition-all duration-1000 ${
-                  index === currentHero
-                    ? "opacity-100 scale-100 z-10"
-                    : "opacity-0 scale-105 z-0"
+                  index === currentHero ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 z-0"
                 }`}
               >
                 <img
@@ -263,9 +250,8 @@ export default function Home() {
                   maxWidth: "60ch", // keeps lines readable
                 }}
               >
-                Embark on an unforgettable journey through Sri Lanka's untamed wilderness
-                with expert guide Nuwan—where every moment brings you closer to nature's
-                most magnificent creatures.
+                Embark on an unforgettable journey through Sri Lanka's untamed wilderness with expert guide Nuwan—where
+                every moment brings you closer to nature's most magnificent creatures.
               </p>
 
               {/* Buttons */}
@@ -314,7 +300,9 @@ export default function Home() {
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center gap-3 mb-6 backdrop-blur-2xl bg-white/5 border border-white/10 rounded-full px-4 sm:px-6 py-2 sm:py-3">
               <Icon icon="mdi:tree" className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 animate-pulse" />
-              <span className="text-green-300 font-medium tracking-wider uppercase text-xs sm:text-sm">Into the Wild</span>
+              <span className="text-green-300 font-medium tracking-wider uppercase text-xs sm:text-sm">
+                Into the Wild
+              </span>
               <Icon icon="mdi:elephant" className="w-5 h-5 sm:w-6 sm:h-6 text-green-400 animate-pulse delay-200" />
             </div>
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-green-100 mb-4 font-bold font-serif">
@@ -372,7 +360,10 @@ export default function Home() {
                   key={i}
                   className="backdrop-blur-2xl bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 hover:scale-105 hover:border-emerald-400/30"
                 >
-                  <Icon icon={item.icon} className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-green-400 mb-3 sm:mb-4" />
+                  <Icon
+                    icon={item.icon}
+                    className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 text-green-400 mb-3 sm:mb-4"
+                  />
                   <h4 className="font-semibold text-emerald-200 text-sm sm:text-base lg:text-lg mb-1">{item.title}</h4>
                   <p className="text-emerald-300 text-xs sm:text-sm lg:text-base">{item.desc}</p>
                 </div>
@@ -382,7 +373,10 @@ export default function Home() {
         </section>
 
         {/* Packages Section */}
-        <section id="packages" className="w-full py-12 sm:py-16 md:py-20 lg:py-28 mt-12 sm:mt-16 md:mt-20 relative overflow-hidden">
+        <section
+          id="packages"
+          className="w-full py-12 sm:py-16 md:py-20 lg:py-28 mt-12 sm:mt-16 md:mt-20 relative overflow-hidden"
+        >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-transparent to-teal-900/15"></div>
 
           <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
@@ -392,7 +386,8 @@ export default function Home() {
               </h3>
               <div className="w-16 sm:w-20 lg:w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto rounded-full"></div>
               <p className="text-green-100 text-sm sm:text-base md:text-lg lg:text-xl mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
-                Choose from our carefully crafted safari experiences, each designed to showcase the best of Udawalawa's wildlife
+                Choose from our carefully crafted safari experiences, each designed to showcase the best of Udawalawa's
+                wildlife
               </p>
             </div>
 
@@ -434,7 +429,6 @@ export default function Home() {
         {selectedPackage && (
           <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[999] flex justify-center items-center p-4 sm:p-6 md:p-8 lg:p-12">
             <div className="backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-sm sm:max-w-md md:max-w-lg text-center relative shadow-2xl animate-fadeInUp">
-              
               {/* Close Button */}
               <button
                 onClick={() => setSelectedPackage(null)}
@@ -469,7 +463,7 @@ export default function Home() {
 
                     <a
                       href={`https://wa.me/94776103421?text=${encodeURIComponent(
-                        `Hello, I am interested in the ${pkg.title} package. Could you please provide more information, including pricing and availability?`
+                        `Hello, I am interested in the ${pkg.title} package. Could you please provide more information, including pricing and availability?`,
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -500,7 +494,6 @@ export default function Home() {
           <GalleryAndReviews />
         </div>
 
-
         <section id="contact">
           <footer className="relative overflow-hidden">
             {/* Background Gradients */}
@@ -511,7 +504,6 @@ export default function Home() {
 
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-24">
               <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-8 sm:gap-12 mb-12 sm:mb-16">
-
                 {/* Logo & About */}
                 <div className="lg:col-span-2">
                   <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
@@ -528,16 +520,29 @@ export default function Home() {
                     </h4>
                   </div>
                   <p className="text-green-100 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 max-w-md">
-                    Experience the untamed beauty of Udawalawa National Park with expert guide Nuwan. Every safari is a journey into Sri Lanka's most spectacular wilderness.
+                    Experience the untamed beauty of Udawalawa National Park with expert guide Nuwan. Every safari is a
+                    journey into Sri Lanka's most spectacular wilderness.
                   </p>
 
                   {/* Social Links */}
                   <div className="flex gap-2 sm:gap-4">
                     {[
                       { icon: "mdi:google", href: "https://g.co/kgs/sPzai3", label: "Google" },
-                      { icon: "simple-icons:tripadvisor", href: "https://www.tripadvisor.com/Attraction_Review-g3577009-d27673880", label: "TripAdvisor" },
-                      { icon: "mdi:facebook", href: "https://www.facebook.com/profile.php?id=100081508587185", label: "Facebook" },
-                      { icon: "mdi:instagram", href: "https://www.instagram.com/udawalawe_jeep_safari_service", label: "Instagram" },
+                      {
+                        icon: "simple-icons:tripadvisor",
+                        href: "https://www.tripadvisor.com/Attraction_Review-g3577009-d27673880",
+                        label: "TripAdvisor",
+                      },
+                      {
+                        icon: "mdi:facebook",
+                        href: "https://www.facebook.com/profile.php?id=100081508587185",
+                        label: "Facebook",
+                      },
+                      {
+                        icon: "mdi:instagram",
+                        href: "https://www.instagram.com/udawalawe_jeep_safari_service",
+                        label: "Instagram",
+                      },
                     ].map((social) => (
                       <a
                         key={social.label}
@@ -581,19 +586,34 @@ export default function Home() {
                   </h4>
                   <div className="space-y-2 sm:space-y-4 text-sm sm:text-base">
                     <div className="flex items-start gap-2 sm:gap-3 text-green-100 group">
-                      <Icon icon="mdi:map-marker" className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 mt-0.5 sm:mt-1 group-hover:scale-110 transition-transform" />
+                      <Icon
+                        icon="mdi:map-marker"
+                        className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 mt-0.5 sm:mt-1 group-hover:scale-110 transition-transform"
+                      />
                       <span>
                         No. 45, RET Junction
                         <br />
                         Udawalawa, Sri Lanka
                       </span>
                     </div>
-                    <a href="tel:+94776103421" className="flex items-center gap-2 sm:gap-3 hover:text-green-400 transition-colors duration-300 group">
-                      <Icon icon="mdi:phone" className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform" />
+                    <a
+                      href="tel:+94776103421"
+                      className="flex items-center gap-2 sm:gap-3 hover:text-green-400 transition-colors duration-300 group"
+                    >
+                      <Icon
+                        icon="mdi:phone"
+                        className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform"
+                      />
                       +94 77 610 3421
                     </a>
-                    <a href="mailto:contact@udawalawasafari.lk" className="flex items-center gap-2 sm:gap-3 hover:text-green-400 transition-colors duration-300 group">
-                      <Icon icon="mdi:email" className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform" />
+                    <a
+                      href="mailto:contact@udawalawasafari.lk"
+                      className="flex items-center gap-2 sm:gap-3 hover:text-green-400 transition-colors duration-300 group"
+                    >
+                      <Icon
+                        icon="mdi:email"
+                        className="text-green-400 w-4 sm:w-5 h-4 sm:h-5 group-hover:scale-110 transition-transform"
+                      />
                       nuwan@udawalawasafari.lk
                     </a>
                   </div>
@@ -604,12 +624,19 @@ export default function Home() {
               <div className="border-t border-green-500/30 pt-6 sm:pt-8 md:pt-10">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4">
                   <div className="text-center md:text-left text-sm sm:text-base md:text-lg">
-                    <p className="text-green-200 font-medium">© {new Date().getFullYear()} Udawalawa Safari Service by Nuwan</p>
+                    <p className="text-green-200 font-medium">
+                      © {new Date().getFullYear()} Udawalawa Safari Service by Nuwan
+                    </p>
                     <p className="text-green-300 mt-1">Crafting unforgettable wildlife experiences since 2020</p>
                   </div>
                   <div className="text-center md:text-right text-sm sm:text-base md:text-lg">
-                    <p className="text-green-300">Designed & Developed by</p>
-                    <a href="https://nexcy.lk" target="_blank" rel="noopener noreferrer" className="text-green-200 font-semibold hover:text-green-400 transition-colors duration-300">
+                    <p className="text-green-300">Designed & developed by</p>
+                    <a
+                      href="https://nexcy.lk"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-green-200 font-semibold hover:text-green-400 transition-colors duration-300"
+                    >
                       NexCy Technologies
                     </a>
                   </div>

@@ -165,7 +165,10 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
 
       {/* Zoom Modal */}
       {zoomedIndex !== null && images[zoomedIndex] && (
-        <div className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4 sm:p-6" onClick={closeZoom}>
+        <div
+          className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4 sm:p-6"
+          onClick={closeZoom}
+        >
           <div className="relative max-w-4xl w-full">
             <button
               onClick={closeZoom}
