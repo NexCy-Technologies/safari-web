@@ -20,9 +20,6 @@ interface GalleryProps {
   className?: string
 }
 
-// Firebase Storage loader for Next.js
-const firebaseLoader = ({ src, width }: { src: string; width: number }) => `${src}?w=${width}`
-
 const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
   const [images, setImages] = useState<GalleryImage[]>([])
   const [displayedImages, setDisplayedImages] = useState<GalleryImage[]>([])
@@ -48,7 +45,9 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
           id: doc.id,
           imageUrl: data.imageUrl,
           description: data.description,
-          alt: data.alt,
+          alt:
+            data.alt ||
+            `Udawalawe Safari wildlife photo - ${data.description || "Safari adventure with elephants and nature"}`,
           timestamp: data.timestamp?.seconds ? new Date(data.timestamp.seconds * 1000) : new Date(),
           featured: data.featured || false,
         }
@@ -99,13 +98,14 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
     >
       <div className="relative w-full aspect-[4/3]">
         <Image
-          src={image.imageUrl}
+          src={image.imageUrl || "/placeholder.svg"}
           alt={image.alt}
           fill
           className="object-cover rounded-2xl"
-          loader={firebaseLoader}
           quality={70}
           priority={index < 8} // only first 8 priority
+          loading={index < 8 ? "eager" : "lazy"}
+          unoptimized
         />
       </div>
     </div>
@@ -133,12 +133,12 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
     <>
       <section className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 ${className}`}>
         <div className="text-center mb-12 sm:mb-16">
-          <h3
+          <h2
             style={{ fontFamily: "Merriweather, serif" }}
             className="text-3xl sm:text-4xl md:text-5xl text-green-200 mb-2 sm:mb-4 font-bold"
           >
             Safari Gallery
-          </h3>
+          </h2>
           <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-green-500 to-green-400 mx-auto rounded-full"></div>
           <p className="text-green-100 text-sm sm:text-base md:text-lg mt-4 sm:mt-6 max-w-2xl mx-auto">
             Discover the incredible wildlife and breathtaking moments captured during our safari adventures
@@ -199,13 +199,13 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
 
             <div className="relative w-full aspect-[4/3] max-h-[80vh]">
               <Image
-                src={images[zoomedIndex].imageUrl}
+                src={images[zoomedIndex].imageUrl || "/placeholder.svg"}
                 alt={images[zoomedIndex].alt}
                 fill
                 className="rounded-2xl shadow-2xl object-contain mx-auto border border-green-900/30"
-                loader={firebaseLoader}
                 quality={90}
                 priority
+                unoptimized
               />
             </div>
 

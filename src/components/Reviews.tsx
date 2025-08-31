@@ -140,9 +140,9 @@ const Reviews: React.FC<ReviewsProps> = ({ className = "" }) => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 text-center">
         {/* Header */}
         <div className="mb-12 sm:mb-16">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl text-green-100 mb-2 sm:mb-4 font-bold font-serif">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl text-green-100 mb-2 sm:mb-4 font-bold font-serif">
             Adventure Stories
-          </h3>
+          </h2>
           <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto mb-4 sm:mb-6"></div>
           <p className="text-green-200 text-sm sm:text-base md:text-lg max-w-2xl mx-auto">
             Hear from fellow adventurers about their incredible wild safari experiences in Udawalawa
@@ -176,9 +176,9 @@ const Reviews: React.FC<ReviewsProps> = ({ className = "" }) => {
                     "
                   >
                     <header className="mb-4 sm:mb-6">
-                      <h4 className="font-serif font-bold text-green-100 text-base sm:text-lg md:text-xl">
+                      <h3 className="font-serif font-bold text-green-100 text-base sm:text-lg md:text-xl">
                         {review.author}
-                      </h4>
+                      </h3>
                       <div className="mt-2 flex items-center gap-2 sm:gap-3 justify-center md:justify-start">
                         <div className="flex">{renderStars(review.rating)}</div>
                         <span className="text-green-300 text-xs sm:text-sm font-medium">{review.date}</span>
