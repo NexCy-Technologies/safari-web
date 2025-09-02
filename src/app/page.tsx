@@ -3,7 +3,9 @@
 import { useEffect, useState } from "react"
 import { Icon } from "@iconify/react"
 import Image from "next/image"
-import GalleryAndReviews from "../components/GalleryAndReviews"
+import RecommendedSafaris from "@/components/RecommendedSafaris"
+import Reviews from "@/components/Reviews"
+import Gallery from "@/components/Gallery"
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -35,7 +37,7 @@ export default function Home() {
   const packages = [
     {
       title: "3-Hour Safari",
-      description: "Quick but immersive experience into the Udawalawa wilderness.",
+      description: "Quick but immersive experience into the Udawalawe wilderness.",
       duration: "3 hours",
       icon: "mdi:clock-fast",
     },
@@ -194,7 +196,7 @@ export default function Home() {
               <span className="bg-gradient-to-r from-green-400 via-emerald-300 to-lime-300 bg-clip-text text-transparent animate-gradient">
                 Wild Safari
               </span>
-              <span className="block text-green-100 mt-2">of Udawalawa</span>
+              <span className="block text-green-100 mt-2">of Udawalawe</span>
             </h1>
 
             {/* Subtitle */}
@@ -341,7 +343,7 @@ export default function Home() {
             </h2>
             <div className="w-16 sm:w-20 lg:w-24 h-1 bg-gradient-to-r from-green-500 to-emerald-400 mx-auto rounded-full"></div>
             <p className="text-green-100 text-sm sm:text-base md:text-lg lg:text-xl mt-4 sm:mt-6 max-w-2xl mx-auto leading-relaxed">
-              Choose from our carefully crafted safari experiences, each designed to showcase the best of Udawalawa's
+              Choose from our carefully crafted safari experiences, each designed to showcase the best of Udawalawe's
               wildlife
             </p>
           </div>
@@ -445,9 +447,9 @@ export default function Home() {
         <Icon icon="mdi:whatsapp" className="w-5 sm:w-6 md:w-7 h-5 sm:h-6 md:h-7" />
       </a>
 
-      <div id="gallery">
-        <GalleryAndReviews />
-      </div>
+      <Gallery className="relative z-10" />
+      <Reviews className="relative z-10" />
+      <RecommendedSafaris className="relative z-10" />
 
       <section id="contact">
         <footer className="relative overflow-hidden">
@@ -477,7 +479,7 @@ export default function Home() {
                   </h2>
                 </div>
                 <p className="text-green-100 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 max-w-md">
-                  Experience the untamed beauty of Udawalawa National Park with expert guide Nuwan. Every safari is a
+                  Experience the untamed beauty of Udawalawe National Park with expert guide Nuwan. Every safari is a
                   journey into Sri Lanka's most spectacular wilderness.
                 </p>
 

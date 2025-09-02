@@ -131,7 +131,8 @@ const Gallery: React.FC<GalleryProps> = ({ className = "" }) => {
 
   return (
     <>
-      <section className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 ${className}`}>
+      {/* ✅ Added id="gallery" */}
+      <section id="gallery" className={`max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 ${className}`}>
         <div className="text-center mb-12 sm:mb-16">
           <h2
             style={{ fontFamily: "Merriweather, serif" }}
