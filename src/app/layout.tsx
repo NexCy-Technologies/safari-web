@@ -36,8 +36,27 @@ export const metadata: Metadata = {
     "Wildlife Adventure",
     "Safari Experience",
     "Nature Tours",
+    "Wild Safari Udawalawe",
+    "Udawalawe Safari Contact Number",
+    "Safari Booking Udawalawe",
+    "Best Safari Sri Lanka",
+    "Safari Packages Udawalawe",
+    "Udawalawe Jeep Hire",
+    "Safari Operator Udawalawe",
+    "Safari Prices Udawalawe",
+    "Safari Reviews Udawalawe",
+    "Safari Sri Lanka Contact",
+    "Safari Udawalawe Telephone",
+    "Udawalawe Safari Tours",
+    "Udawalawe Safari Jeep",
+    "Udawalawe Safari Jeep Service",
+    "Udawalawe National Park Jeep Safari Price",
+    "Udawalawe Jeep Safari",
+    "Udawalawe Safari Jeep Price for Locals",
+    "Udawalawe National Park Safari Jeep",
+    "Udawalawe Safari Jeep Contact Number",
   ],
-  authors: [{ name: "Nuwan Safari", url: "https://udawalawasafari.lk" }],
+  authors: [{ name: "Nuwan Safari", url: "https://www.udawalawasafari.lk" }],
   icons: {
     icon: "/favicon.ico",
   },
@@ -46,11 +65,11 @@ export const metadata: Metadata = {
     title: "Udawalawe Safari Jeep Tours | Expert Wildlife Guide in Sri Lanka",
     description:
       "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Professional jeep safari tours with local expertise and 5-star reviews.",
-    url: "https://udawalawasafari.lk",
+    url: "https://www.udawalawasafari.lk",
     siteName: "Udawalawe Safari by Nuwan",
     images: [
       {
-        url: "https://udawalawasafari.lk/udawalawe-safari-social-preview.png",
+        url: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
         width: 1200,
         height: 630,
         alt: "Udawalawe Safari Wildlife Adventure with Expert Guide Nuwan",
@@ -63,7 +82,7 @@ export const metadata: Metadata = {
     title: "Udawalawe Safari Jeep Tours | Expert Wildlife Guide in Sri Lanka",
     description:
       "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Book your Sri Lanka safari adventure today.",
-    images: ["https://udawalawasafari.lk/udawalawe-safari-social-preview.png"],
+    images: ["https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png"],
     creator: "@NuwanSafari",
   },
   verification: {
@@ -81,7 +100,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://udawalawasafari.lk",
+    canonical: "https://www.udawalawasafari.lk",
   },
 }
 
@@ -149,16 +168,16 @@ export default function RootLayout({
               "@graph": [
                 {
                   "@type": "LocalBusiness",
-                  "@id": "https://udawalawasafari.lk/#business",
+                  "@id": "https://www.udawalawasafari.lk/#business",
                   name: "Udawalawe Safari",
                   alternateName: "Udawalawe Safari Service by Nuwan",
                   description:
                     "Professional jeep safari tours in Udawalawe National Park, Sri Lanka. Expert wildlife guide Nuwan offers unforgettable safari experiences with elephants, leopards, and exotic birds.",
-                  url: "https://udawalawasafari.lk",
+                  url: "https://www.udawalawasafari.lk",
                   telephone: "+94776103421",
                   email: "contact@udawalawasafari.lk",
-                  logo: "https://udawalawasafari.lk/logo.png",
-                  image: "https://udawalawasafari.lk/udawalawe-safari-social-preview.png",
+                  logo: "https://www.udawalawasafari.lk/logo.png",
+                  image: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
                   address: {
                     "@type": "PostalAddress",
                     streetAddress: "No. 45, RET Junction",
@@ -189,12 +208,12 @@ export default function RootLayout({
                 },
                 {
                   "@type": "TouristTrip",
-                  "@id": "https://udawalawasafari.lk/#safari-trip",
+                  "@id": "https://www.udawalawasafari.lk/#safari-trip",
                   name: "Udawalawe Safari",
                   description:
                     "Expertly guided jeep safari tours through Udawalawe National Park, offering close encounters with elephants, leopards, water buffalo, crocodiles, and over 200 bird species in their natural habitat.",
                   provider: {
-                    "@id": "https://udawalawasafari.lk/#business",
+                    "@id": "https://www.udawalawasafari.lk/#business",
                   },
                   touristType: "Wildlife Enthusiast",
                   itinerary: {
@@ -214,7 +233,7 @@ export default function RootLayout({
                 },
                 {
                   "@type": "FAQPage",
-                  "@id": "https://udawalawasafari.lk/#faq",
+                  "@id": "https://www.udawalawasafari.lk/#faq",
                   mainEntity: [
                     {
                       "@type": "Question",
@@ -255,7 +274,7 @@ export default function RootLayout({
           }}
         />
 
-        <link rel="canonical" href="https://udawalawasafari.lk" />
+        <link rel="canonical" href="https://www.udawalawasafari.lk" />
         <meta name="theme-color" content="#10b981" />
         <meta name="msapplication-TileColor" content="#10b981" />
         <meta name="apple-mobile-web-app-capable" content="yes" />

@@ -12,7 +12,7 @@ interface SeoProps {
 const Seo: React.FC<SeoProps> = ({
   title = "Udawalawe Jeep Safari Service by Nuwan | Best Wildlife Tours Sri Lanka",
   description = "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Professional jeep safari tours with local expertise and 5-star reviews. Book your Sri Lanka safari adventure today.",
-  url = "https://udawalawasafari.lk",
+  url = "https://www.udawalawasafari.lk",
   image = "/udawalawe-safari-social-preview.png",
   twitterHandle = "@NuwanSafari",
 }) => {
@@ -23,7 +23,7 @@ const Seo: React.FC<SeoProps> = ({
       <meta name="description" content={description} />
       <meta
         name="keywords"
-        content="Udawalawe Safari, Nuwan Safari, Sri Lanka Wildlife, Jeep Safari, Safari Tours, Elephant Safari, Leopard Spotting, Wildlife Photography, National Park Tours, Safari Guide, Udawalawe National Park, Sri Lanka Tourism, Wildlife Adventure, Safari Experience, Nature Tours"
+        content="Udawalawe Safari, Udawalawe Jeep safari, Nuwan Safari, Sri Lanka Wildlife, Jeep Safari, Safari Tours, Elephant Safari, Leopard Spotting, Wildlife Photography, National Park Tours, Safari Guide, Udawalawe National Park, Sri Lanka Tourism, Wildlife Adventure, Safari Experience, Nature Tours, Wild Safari Udawalawe, Udawalawe Jeep Tours, Udawalawe Wildlife Safari, Udawalawe Elephant Tours, Udawalawe Bird Watching, Udawalawe Nature Safari, Udawalawe Safari Contact Number, Safari Booking Udawalawe, Best Safari Sri Lanka, Safari Packages Udawalawe, Udawalawe Jeep Hire, Safari Operator Udawalawe, Safari Prices Udawalawe, Safari Reviews Udawalawe, Safari Sri Lanka Contact, Safari Udawalawe Telephone, Udawalawe Safari Tours, Udawalawe Safari Jeep, Udawalawe Safari Jeep Service, Udawalawe National Park Jeep Safari Price, Udawalawe Jeep Safari, Udawalawe Safari Jeep Price for Locals, Udawalawe National Park Safari Jeep, Udawalawe Safari Jeep Contact Number"
       />
       <meta name="author" content="Nuwan Safari" />
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
