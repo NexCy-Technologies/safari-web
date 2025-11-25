@@ -1,7 +1,7 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  // Static export for hosting on Firebase/Netlify/Vercel
+  // Static export for Firebase hosting
   output: 'export',
   
   // Enable React strict mode
@@ -30,17 +30,13 @@ const nextConfig: NextConfig = {
     } : false,
   },
 
-  // Enable SWC minification (faster than Terser)
-  swcMinify: true,
+  // SWC minification is default in Next 15+; removed deprecated swcMinify key
 
   // Disable source maps in production for smaller bundle
   productionBrowserSourceMaps: false,
 
-  // Experimental features for better performance
-  experimental: {
-    // Enable optimized package imports for other libraries
-    optimizePackageImports: ['lucide-react'],
-  },
+  // Experimental features placeholder (add if needed)
+  // experimental: {},
 
   // Reduce bundle size by tree-shaking unused code
   webpack: (config) => {

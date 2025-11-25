@@ -17,72 +17,121 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Udawalawe Safari Jeep Tours | Expert Wildlife Guide in Sri Lanka",
+  title: "Udawalawe Safari by Nuwan | Best Jeep Tours & Wildlife Safari Sri Lanka 2025",
   description:
-    "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Book your Sri Lanka safari adventure today.",
+    "#1 Rated Udawalawe Safari Service by Nuwan - Expert wildlife jeep tours in Sri Lanka. See 100+ wild elephants, leopards, sloth bears & 400+ bird species. Affordable packages, 5-star reviews, WhatsApp booking. Visit Udawalawe National Park with certified local guide.",
   keywords: [
+    // Primary Keywords - Sri Lanka Focus
     "Udawalawe Safari",
-    "Nuwan Safari",
-    "Sri Lanka Wildlife",
-    "Jeep Safari",
-    "Safari Tours",
-    "Elephant Safari",
-    "Leopard Spotting",
-    "Wildlife Photography",
-    "National Park Tours",
-    "Safari Guide",
-    "Udawalawe National Park",
-    "Sri Lanka Tourism",
-    "Wildlife Adventure",
-    "Safari Experience",
-    "Nature Tours",
-    "Wild Safari Udawalawe",
-    "Udawalawe Safari Contact Number",
-    "Safari Booking Udawalawe",
-    "Best Safari Sri Lanka",
-    "Safari Packages Udawalawe",
-    "Udawalawe Jeep Hire",
-    "Safari Operator Udawalawe",
-    "Safari Prices Udawalawe",
-    "Safari Reviews Udawalawe",
-    "Safari Sri Lanka Contact",
-    "Safari Udawalawe Telephone",
-    "Udawalawe Safari Tours",
-    "Udawalawe Safari Jeep",
-    "Udawalawe Safari Jeep Service",
-    "Udawalawe National Park Jeep Safari Price",
+    "Udawalawe National Park Safari",
+    "Sri Lanka Safari Tours",
+    "Sri Lanka Wildlife Safari",
     "Udawalawe Jeep Safari",
-    "Udawalawe Safari Jeep Price for Locals",
-    "Udawalawe National Park Safari Jeep",
-    "Udawalawe Safari Jeep Contact Number",
+    "Safari Sri Lanka",
+    "Udawalawe Elephant Safari",
+    "Best Safari in Sri Lanka",
+    
+    // Location-Based Keywords
+    "Udawalawe Safari by Nuwan",
+    "Safari Udawalawe National Park",
+    "Udawalawe Safari Service",
+    "Safari Tours Udawalawe",
+    "Udawalawe Wildlife Tours",
+    "Embilipitiya Safari",
+    "Southern Province Safari Sri Lanka",
+    "Sabaragamuwa Safari",
+    
+    // Activity Keywords
+    "Elephant Watching Sri Lanka",
+    "Wild Elephant Safari",
+    "Leopard Spotting Sri Lanka",
+    "Bird Watching Udawalawe",
+    "Wildlife Photography Safari",
+    "Nature Safari Sri Lanka",
+    "Jungle Safari Tours",
+    
+    // Service Keywords
+    "Private Jeep Safari Udawalawe",
+    "Udawalawe Safari Jeep Hire",
+    "Safari Guide Udawalawe",
+    "Professional Safari Service",
+    "Licensed Safari Operator",
+    "Certified Wildlife Guide",
+    "Local Safari Expert",
+    
+    // Booking & Pricing Keywords
+    "Udawalawe Safari Booking",
+    "Safari Packages Sri Lanka",
+    "Affordable Safari Tours",
+    "Budget Safari Udawalawe",
+    "Safari Ticket Price",
+    "Half Day Safari Udawalawe",
+    "Full Day Safari Package",
+    "Morning Safari Tour",
+    "Evening Safari Udawalawe",
+    
+    // Contact & Reviews
+    "Udawalawe Safari Contact Number",
+    "Safari WhatsApp Booking",
+    "5 Star Safari Reviews",
+    "Best Rated Safari Sri Lanka",
+    "Trusted Safari Operator",
+    "Safari Reviews Udawalawe",
+    
+    // International Keywords
+    "Sri Lanka Safari from Colombo",
+    "Safari Day Trip from Galle",
+    "Safari Tour from Ella",
+    "Safari from Mirissa",
+    "Safari from Yala",
+    "Sri Lanka Wildlife Holiday",
+    "Asia Safari Tours",
+    "South Asia Wildlife Safari",
+    
+    // Long-tail Keywords
+    "How to Book Udawalawe Safari",
+    "What Animals in Udawalawe",
+    "Best Time Safari Udawalawe",
+    "Udawalawe vs Yala Safari",
+    "Family Safari Sri Lanka",
+    "Honeymoon Safari Package",
+    "Photography Safari Udawalawe",
+    
+    // Tourism Keywords
+    "Sri Lanka Tourism Safari",
+    "Visit Sri Lanka Wildlife",
+    "Things to Do Udawalawe",
+    "Udawalawe Attractions",
+    "Sri Lanka National Parks",
+    "Ceylon Safari Experience",
   ],
-  authors: [{ name: "Nuwan Safari", url: "https://www.udawalawasafari.lk" }],
+  authors: [{ name: "Nuwan - Udawalawe Safari Expert", url: "https://udawalawasafari.lk" }],
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
     type: "website",
-    title: "Udawalawe Safari Jeep Tours | Expert Wildlife Guide in Sri Lanka",
+    title: "Udawalawe Safari by Nuwan | #1 Wildlife Jeep Tours Sri Lanka",
     description:
-      "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Professional jeep safari tours with local expertise and 5-star reviews.",
-    url: "https://www.udawalawasafari.lk",
-    siteName: "Udawalawe Safari by Nuwan",
+      "🐘 See 100+ wild elephants in natural habitat! Expert-guided jeep safaris in Udawalawe National Park. Leopards, sloth bears, 400+ birds. 5⭐ rated, affordable packages, instant WhatsApp booking. Best wildlife experience in Sri Lanka.",
+    url: "https://udawalawasafari.lk",
+    siteName: "Udawalawe Safari by Nuwan - Sri Lanka's Premier Wildlife Tours",
     images: [
       {
-        url: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
+        url: "https://udawalawasafari.lk/udawalawe-safari-social-preview.png",
         width: 1200,
         height: 630,
-        alt: "Udawalawe Safari Wildlife Adventure with Expert Guide Nuwan",
+        alt: "Udawalawe Safari - Wild Elephants & Wildlife Tours in Sri Lanka",
       },
     ],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Udawalawe Safari Jeep Tours | Expert Wildlife Guide in Sri Lanka",
+    title: "Udawalawe Safari by Nuwan | Best Wildlife Jeep Tours Sri Lanka",
     description:
-      "Experience expertly guided wildlife safaris with Nuwan in Udawalawe National Park. See elephants, leopards, and exotic birds. Book your Sri Lanka safari adventure today.",
-    images: ["https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png"],
+      "🐘 Expert-guided wildlife safaris in Udawalawe National Park. See 100+ elephants, leopards, sloth bears. 5-star reviews, affordable packages. Book your Sri Lanka safari adventure now!",
+    images: ["https://udawalawasafari.lk/udawalawe-safari-social-preview.png"],
     creator: "@NuwanSafari",
   },
   verification: {
@@ -100,7 +149,13 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://www.udawalawasafari.lk",
+    canonical: "https://udawalawasafari.lk",
+  },
+  other: {
+    "geo.region": "LK-2",
+    "geo.placename": "Udawalawe, Sabaragamuwa Province, Sri Lanka",
+    "geo.position": "6.4833;80.8833",
+    "ICBM": "6.4833, 80.8833",
   },
 }
 
@@ -275,8 +330,8 @@ export default function RootLayout({
         />
 
         <link rel="canonical" href="https://www.udawalawasafari.lk" />
-        <meta name="theme-color" content="#10b981" />
-        <meta name="msapplication-TileColor" content="#10b981" />
+        <meta name="theme-color" content="#c8a96b" />
+        <meta name="msapplication-TileColor" content="#c8a96b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="format-detection" content="telephone=yes" />

@@ -1,43 +1,85 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --breakpoint-xs: 375px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+  --breakpoint-3xl: 1920px;
+  --breakpoint-4xl: 2560px;
+}
+
+/* Base theme (wild green safari) */
 :root {
+  --lux-ink: #08110d;
+  --lux-forest: #0f2419;
+  --lux-ivory: #f5f7f4;
+  --lux-gold: #3f8c5d; /* primary accent -> green */
+  --lux-gold-600: #2e6a46;
+  --lux-gold-400: #55b079;
+  --lux-olive: #1d3a2c;
+  --safari-sun: #d4b256;
+  --safari-lime: #8fd887;
+  --background: var(--lux-ink);
+  --foreground: var(--lux-ivory);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
+  --primary: var(--lux-gold);
+  --primary-foreground: var(--lux-ink);
+  --secondary: var(--lux-forest);
+  --secondary-foreground: var(--lux-ivory);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --accent: var(--lux-gold-400);
+  --accent-foreground: var(--lux-ink);
+  --destructive: #c53f3f;
+  --destructive-foreground: #ffffff;
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  --chart-1: #3f8c5d;
+  --chart-2: #55b079;
+  --chart-3: #2e6a46;
+  --chart-4: #8fd887;
+  --chart-5: #d4b256;
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar: var(--lux-forest);
+  --sidebar-foreground: var(--lux-ivory);
+  --sidebar-primary: var(--lux-gold);
+  --sidebar-primary-foreground: var(--lux-ink);
+  --sidebar-accent: var(--lux-gold-400);
+  --sidebar-accent-foreground: var(--lux-ink);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
 }
+
+/* Light theme overrides */
+:root[data-theme='light'] {
+  --lux-ink: #eef5f0;
+  --lux-forest: #e3efe7;
+  --lux-ivory: #0f2419;
+  --lux-gold: #4fae6e;
+  --lux-gold-600: #3a8853;
+  --lux-gold-400: #6dcf8d;
+  --lux-olive: #cfe4d7;
+  --background: #ffffff;
+  --foreground: #0f2419;
+  --accent: var(--lux-gold-400);
+}
+
+/* Dark theme explicit (same as base but kept for clarity) */
+:root[data-theme='dark'] {
+  --background: var(--lux-ink);
+  --foreground: var(--lux-ivory);
+}
+
+html[data-theme='dark'], html[data-theme='light'] { transition: background-color .4s ease, color .4s ease; }
 
 .dark {
   --background: oklch(0.145 0 0);
@@ -78,16 +120,16 @@
   /* Updated font variables to match the safari website fonts */
   --font-sans: var(--font-inter);
   --font-serif: var(--font-playfair);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--lux-ink);
+  --color-foreground: var(--lux-ivory);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+  --color-primary: var(--lux-gold);
+  --color-primary-foreground: var(--lux-ink);
+  --color-secondary: var(--lux-forest);
+  --color-secondary-foreground: var(--lux-ivory);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
@@ -121,23 +163,76 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    transition: background-color 0.4s ease;
+  }
+  
+  /* Dark theme background */
+  :root[data-theme='dark'] body,
+  body {
+    background-color: #08110d;
+    background-image:
+      radial-gradient(1000px 600px at 80% -10%, rgba(63,140,93,0.15), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(15,36,25,0.6), transparent 60%),
+      radial-gradient(700px 400px at 110% 80%, rgba(63,140,93,0.10), transparent 60%);
+  }
+  
+  /* Light theme background */
+  :root[data-theme='light'] body {
+    background-color: #f8faf9;
+    background-image:
+      radial-gradient(1000px 600px at 80% -10%, rgba(63,140,93,0.08), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(227,239,231,0.5), transparent 60%),
+      radial-gradient(700px 400px at 110% 80%, rgba(63,140,93,0.05), transparent 60%);
   }
 }
 
 /* Added safari-themed glass morphism utilities for wild jungle vibe */
 .glass {
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  background: rgba(34, 197, 94, 0.05);
-  border: 1px solid rgba(34, 197, 94, 0.1);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: rgba(63,140,93,0.10);
+  border: 1px solid rgba(63,140,93,0.25);
 }
 
 .glass-strong {
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(63,140,93,0.18);
+  border: 1px solid rgba(63,140,93,0.35);
+}
+
+/* Liquid glass (Apple-style) */
+.liquid-glass {
+  position: relative;
+  backdrop-filter: blur(28px) saturate(175%);
+  -webkit-backdrop-filter: blur(28px) saturate(175%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05)) padding-box,
+              linear-gradient(135deg, rgba(63,140,93,0.45), rgba(29,58,44,0.55)) border-box;
+  border: 1px solid rgba(63,140,93,0.40);
+  overflow: hidden;
+}
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(800px 500px at 20% 25%, rgba(63,140,93,0.20), transparent 60%),
+    radial-gradient(900px 600px at 80% 70%, rgba(29,58,44,0.25), transparent 65%),
+    linear-gradient(120deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 35%);
+  pointer-events: none;
+  mix-blend-mode: plus-lighter;
+}
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  left: -20%;
+  width: 140%;
+  height: 180%;
+  background: radial-gradient(circle at 60% 40%, rgba(255,255,255,0.45), rgba(255,255,255,0) 65%);
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 /* Added smooth scrolling for better UX */
@@ -155,12 +250,12 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(34, 197, 94, 0.5);
+  background: rgba(63, 140, 93, 0.55);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(34, 197, 94, 0.7);
+  background: rgba(63, 140, 93, 0.75);
 }
 
 /* Added performance optimizations */
@@ -171,4 +266,22 @@ html {
 
 img {
   content-visibility: auto;
+}
+
+/* Luxury accent utilities */
+.lux-accent {
+  color: var(--lux-gold);
+}
+.lux-accent-bg {
+  background-color: color-mix(in oklab, var(--lux-gold) 18%, transparent);
+}
+.lux-border {
+  border-color: color-mix(in oklab, var(--lux-gold) 26%, transparent);
+}
+.texture-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' opacity='0.08' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
