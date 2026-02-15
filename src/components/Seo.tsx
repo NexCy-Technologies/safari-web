@@ -10,10 +10,10 @@ interface SeoProps {
 }
 
 const Seo: React.FC<SeoProps> = ({
-  title = "Udawalawe Safari by Nuwan | Best Wildlife Jeep Tours Sri Lanka 2025",
-  description = "🐘 #1 Rated Udawalawe Safari - Expert wildlife tours in Sri Lanka. See 100+ wild elephants, leopards, sloth bears & 400+ bird species. Certified local guide, 5-star reviews, affordable packages. Book your Udawalawe National Park safari adventure with WhatsApp today!",
-  url = "https://udawalawasafari.lk",
-  image = "/udawalawe-safari-social-preview.png",
+  title = "Udawalawe Safari by Nuwan | Best Wildlife Jeep Tours Sri Lanka 2026",
+  description = "#1 Rated Udawalawe Safari - Expert wildlife tours in Sri Lanka. See 100+ wild elephants, leopards, sloth bears & 400+ bird species. Certified local guide, 5-star reviews, affordable packages. Book your Udawalawe National Park safari adventure with WhatsApp today!",
+  url = "https://www.udawalawasafari.lk",
+  image = "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
   twitterHandle = "@UdawalaweSafari",
 }) => {
   return (
@@ -41,6 +41,7 @@ const Seo: React.FC<SeoProps> = ({
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:secure_url" content={image} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content="Udawalawe Safari - Wild Elephants & Wildlife in Sri Lanka" />
@@ -77,11 +78,12 @@ const Seo: React.FC<SeoProps> = ({
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "TouristAttraction",
+            "@type": "LocalBusiness",
             name: "Udawalawe Safari by Nuwan",
             description: "Expert wildlife safari tours in Udawalawe National Park, Sri Lanka",
-            url: "https://udawalawasafari.lk",
+            url: "https://www.udawalawasafari.lk",
             telephone: "+94776103421",
+            image: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
             address: {
               "@type": "PostalAddress",
               addressLocality: "Udawalawe",
@@ -101,7 +103,9 @@ const Seo: React.FC<SeoProps> = ({
             priceRange: "$$",
             openingHours: "Mo-Su 05:00-18:00",
             sameAs: [
-              "https://wa.me/94776103421"
+              "https://wa.me/94776103421",
+              "https://www.facebook.com/profile.php?id=100081508587185",
+              "https://www.instagram.com/udawalawe_jeep_safari_service"
             ]
           })
         }}

@@ -104,7 +104,7 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
 
   if (error) {
     return (
-      <section id="gallery" className="py-20 text-center">
+      <section id="gallery" data-reveal className="py-20 text-center">
         <Icon icon="mdi:alert-circle" className="w-12 h-12 text-red-400 mx-auto mb-4" />
         <p className="text-red-400 mb-4">{error}</p>
         <button onClick={() => window.location.reload()} className="px-6 py-3 bg-green-600 text-white rounded-full">
@@ -116,7 +116,7 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
 
   return (
     <>
-      <section ref={sectionRef} id="gallery" className="py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden">
+      <section ref={sectionRef} id="gallery" data-reveal className="py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden">
         <div className="absolute inset-0 -z-10" style={{ backgroundColor: isDark ? '#08110d' : '#f0f9f4' }}>
           <div className="absolute inset-0" style={{
             background: isDark
@@ -393,9 +393,9 @@ const ReviewsSection = memo(({ theme }: { theme: ThemeMode }) => {
   const Stars = ({ rating }: { rating: number }) => (
     <div className="flex">{Array.from({ length:5 }).map((_,i)=>(<Icon key={i} icon={i < rating ? 'mdi:star' : 'mdi:star-outline'} className={`w-4 h-4 ${(i<rating)?'text-yellow-400':'text-neutral-600'}`} />))}</div>
   )
-  if (error) return <section id="reviews" className="py-20 text-center"><p className="text-red-400">{error}</p></section>
+  if (error) return <section id="reviews" data-reveal className="py-20 text-center"><p className="text-red-400">{error}</p></section>
   return (
-    <section id="reviews" className="py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onMouseEnter={stop} onMouseLeave={start}>
+    <section id="reviews" data-reveal className="py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 relative overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onMouseEnter={stop} onMouseLeave={start}>
       <div className="absolute inset-0" style={{
         background: isDark
           ? 'radial-gradient(1000px 600px at 50% 30%, rgba(63,140,93,0.1), transparent)'
@@ -513,7 +513,7 @@ ReviewsSection.displayName = 'ReviewsSection'
 const RecommendedSafariSection = memo(({ theme }: { theme: ThemeMode }) => {
   const isDark = theme === 'dark'
   return (
-    <section id="recommended-safari" className="py-12 relative overflow-hidden">
+    <section id="recommended-safari" data-reveal className="py-12 relative overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
@@ -628,6 +628,28 @@ export default function Home() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (prefersReducedMotion || typeof window === 'undefined') return
+    const elements = Array.from(document.querySelectorAll('[data-reveal]'))
+    if (!elements.length) return
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+          } else {
+            entry.target.classList.remove('is-visible')
+          }
+        })
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    )
+
+    elements.forEach((el) => revealObserver.observe(el))
+    return () => revealObserver.disconnect()
+  }, [prefersReducedMotion])
+
   const heroImages = [
     { src: "/assets/hero1.webp", priority: true },
     { src: "/assets/hero2.webp", priority: false },
@@ -719,12 +741,22 @@ export default function Home() {
     ? (isDark ? 'backdrop-blur-xl bg-black/45 shadow-lg' : 'backdrop-blur-xl bg-white/80 shadow-lg')
     : (isDark ? 'bg-transparent' : 'backdrop-blur-xl bg-white/60 shadow-sm')
 
+  const heroScrollRange = 700
+  const heroProgress = Math.min(scrollY / heroScrollRange, 1)
+  const easeOut = 1 - Math.pow(1 - heroProgress, 3)
+  const heroParallax = Math.min(scrollY * 0.6, 420)
+  const heroContentParallax = Math.min(scrollY * 0.28, 220)
+  const heroScale = 1 + easeOut * 0.02
+  const heroOpacity = 1 - easeOut * 0.22
+  const heroBlur = Math.min(6 * easeOut, 6)
+
   const getAnimationStyle = useCallback((visible: boolean, delay = 0) => {
     if (prefersReducedMotion) return {}
     return {
       opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(40px)',
-      transition: `all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`
+      transform: visible ? 'translateY(0) scale(1)' : 'translateY(36px) scale(0.985)',
+      filter: visible ? 'blur(0px)' : 'blur(6px)',
+      transition: `all 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`
     }
   }, [prefersReducedMotion])
 
@@ -883,11 +915,20 @@ export default function Home() {
 
       <section
         id="hero"
+        data-reveal
         className="relative flex items-center overflow-hidden pt-20 sm:pt-24 md:pt-28 pb-14 sm:pb-16 lg:pb-20"
         style={{ minHeight: '100svh' }}
       >
         {/* Full Screen Background */}
-        <div className="absolute inset-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            transform: `translateY(-${heroParallax}px) scale(${heroScale})`,
+            opacity: heroOpacity,
+            filter: `blur(${heroBlur}px)`,
+            willChange: 'transform, opacity, filter'
+          }}
+        >
           {heroImages.map((img, index) => (
             <div
               key={index}
@@ -907,6 +948,8 @@ export default function Home() {
                   transition: 'transform 20s ease-out'
                 }}
                 priority={img.priority}
+                loading={img.priority ? "eager" : "lazy"}
+                fetchPriority={img.priority ? "high" : "auto"}
                 quality={90}
                 unoptimized
               />
@@ -925,7 +968,15 @@ export default function Home() {
         </div>
 
         {/* Clean Content */}
-        <div className="relative z-10 w-full max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
+        <div
+          data-reveal
+          className="relative z-10 w-full max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
+          style={{
+            transform: `translateY(-${heroContentParallax}px)`,
+            opacity: 1 - easeOut * 0.18,
+            willChange: 'transform, opacity'
+          }}
+        >
           <div className="max-w-5xl">
             {/* Minimalist Badge */}
             <div className="mb-4 sm:mb-6 md:mb-8 inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full backdrop-blur-md" 
@@ -1041,7 +1092,7 @@ export default function Home() {
               {[
                 { value: '500+', label: 'Wild Elephants' },
                 { value: '500+', label: 'Happy Travelers' },
-                { value: '6+', label: 'Years Experience' }
+                { value: '7+', label: 'Years Experience' }
               ].map((stat, i) => (
                 <div key={i} className="relative">
                   <div className="text-2xl xs:text-3xl sm:text-4xl font-black mb-1" style={{ color: '#ffffff', textShadow: isDark ? 'none' : '0 2px 8px rgba(0,0,0,0.3)' }}>{stat.value}</div>
@@ -1054,7 +1105,10 @@ export default function Home() {
         </div>
 
         {/* Sleek Navigation Dots */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        <div
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-20"
+          style={{ transform: `translate(-50%, ${-heroContentParallax * 0.2}px)` }}
+        >
           {heroImages.map((_, index) => (
             <button
               key={index}
@@ -1074,14 +1128,17 @@ export default function Home() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 text-white/60">
+        <div
+          className="absolute bottom-24 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 text-white/60"
+          style={{ opacity: 1 - easeOut * 0.7 }}
+        >
           <span className="text-xs uppercase tracking-widest">Scroll</span>
           <Icon icon="mdi:chevron-down" className="w-6 h-6" />
         </div>
       </section>
 
       {/* Signature Experience */}
-      <section className="w-full py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24 2xl:py-28 relative">
+      <section data-reveal className="w-full py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24 2xl:py-28 relative">
         <div
           className="absolute inset-0"
           style={{ background: isDark ? 'linear-gradient(90deg, rgba(63,140,93,0.14), rgba(8,17,13,0))' : 'linear-gradient(90deg, rgba(141,216,135,0.22), rgba(255,255,255,0))' }}
@@ -1135,6 +1192,7 @@ export default function Home() {
       {/* Trust bar removed per redesign request */}
 
       <section
+        data-reveal
         ref={aboutRef}
         id="about"
         className="w-full max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16 py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 xl:py-24 2xl:py-28"
@@ -1216,6 +1274,7 @@ export default function Home() {
       </section>
 
       <section
+        data-reveal
         ref={packagesRef}
         id="packages"
         className="py-8 xs:py-10 sm:py-12 md:py-16 lg:py-20 relative"
@@ -1410,13 +1469,13 @@ export default function Home() {
         <Icon icon="mdi:whatsapp" className="w-6 h-6 sm:w-6.5 sm:h-6.5 md:w-7 md:h-7 lg:w-8 lg:h-8 transition-transform duration-300 group-hover:scale-110" />
       </a>
 
-      <div className="space-y-0 relative z-10">
+      <div className="space-y-0 relative z-10" data-reveal>
         <GallerySection theme={theme} />
         <ReviewsSection theme={theme} />
         <RecommendedSafariSection theme={theme} />
       </div>
 
-      <section id="contact" ref={footerRef}>
+      <section id="contact" ref={footerRef} data-reveal>
         <footer 
           className="relative pb-0"
           style={getAnimationStyle(isFooterVisible)}
@@ -1623,6 +1682,22 @@ export default function Home() {
           }
         }
 
+        [data-reveal] {
+          opacity: 0;
+          transform: translateY(32px) scale(0.985);
+          filter: blur(6px);
+          transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+            filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: opacity, transform, filter;
+        }
+
+        [data-reveal].is-visible {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+
         .animate-hero-fade-in {
           animation: none;
           opacity: 1;
@@ -1656,6 +1731,12 @@ export default function Home() {
             animation-duration: 0.01ms !important;
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
+          }
+
+          [data-reveal] {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
           }
         }
 

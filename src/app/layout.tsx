@@ -1,8 +1,9 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display } from "next/font/google"
 import "./globals.css"
 import { Suspense } from "react"
+import Script from "next/script"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,7 +18,8 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: "Udawalawe Safari by Nuwan | Best Jeep Tours & Wildlife Safari Sri Lanka 2025",
+  metadataBase: new URL("https://www.udawalawasafari.lk"),
+  title: "Udawalawe Safari by Nuwan | Best Jeep Tours & Wildlife Safari Sri Lanka 2026",
   description:
     "#1 Rated Udawalawe Safari Service by Nuwan - Expert wildlife jeep tours in Sri Lanka. See 100+ wild elephants, leopards, sloth bears & 400+ bird species. Affordable packages, 5-star reviews, WhatsApp booking. Visit Udawalawe National Park with certified local guide.",
   keywords: [
@@ -105,7 +107,11 @@ export const metadata: Metadata = {
     "Sri Lanka National Parks",
     "Ceylon Safari Experience",
   ],
-  authors: [{ name: "Nuwan - Udawalawe Safari Expert", url: "https://udawalawasafari.lk" }],
+  applicationName: "Udawalawe Safari by Nuwan",
+  category: "Travel",
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
+  authors: [{ name: "Nuwan - Udawalawe Safari Expert", url: "https://www.udawalawasafari.lk" }],
   icons: {
     icon: "/favicon.ico",
   },
@@ -114,11 +120,11 @@ export const metadata: Metadata = {
     title: "Udawalawe Safari by Nuwan | #1 Wildlife Jeep Tours Sri Lanka",
     description:
       "🐘 See 100+ wild elephants in natural habitat! Expert-guided jeep safaris in Udawalawe National Park. Leopards, sloth bears, 400+ birds. 5⭐ rated, affordable packages, instant WhatsApp booking. Best wildlife experience in Sri Lanka.",
-    url: "https://udawalawasafari.lk",
+    url: "https://www.udawalawasafari.lk",
     siteName: "Udawalawe Safari by Nuwan - Sri Lanka's Premier Wildlife Tours",
     images: [
       {
-        url: "https://udawalawasafari.lk/udawalawe-safari-social-preview.png",
+        url: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
         width: 1200,
         height: 630,
         alt: "Udawalawe Safari - Wild Elephants & Wildlife Tours in Sri Lanka",
@@ -131,8 +137,9 @@ export const metadata: Metadata = {
     title: "Udawalawe Safari by Nuwan | Best Wildlife Jeep Tours Sri Lanka",
     description:
       "🐘 Expert-guided wildlife safaris in Udawalawe National Park. See 100+ elephants, leopards, sloth bears. 5-star reviews, affordable packages. Book your Sri Lanka safari adventure now!",
-    images: ["https://udawalawasafari.lk/udawalawe-safari-social-preview.png"],
+    images: ["https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png"],
     creator: "@NuwanSafari",
+    site: "@NuwanSafari",
   },
   verification: {
     google: "your-google-verification-code", // Replace with actual GSC code
@@ -149,7 +156,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://udawalawasafari.lk",
+    canonical: "https://www.udawalawasafari.lk",
   },
   other: {
     "geo.region": "LK-2",
@@ -157,6 +164,17 @@ export const metadata: Metadata = {
     "geo.position": "6.4833;80.8833",
     "ICBM": "6.4833, 80.8833",
   },
+}
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  colorScheme: "dark light",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0f2419" },
+    { media: "(prefers-color-scheme: light)", color: "#c8a96b" },
+  ],
 }
 
 export default function RootLayout({
@@ -167,53 +185,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} antialiased`}>
       <head>
-        <script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX"}`}
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX"}', {
-                page_title: document.title,
-                page_location: window.location.href,
-              });
-            `,
-          }}
-        />
-
-        {process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID && (
-          <>
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  !function(f,b,e,v,n,t,s)
-                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                  n.queue=[];t=b.createElement(e);t.async=!0;
-                  t.src=v;s=b.getElementsByTagName(e)[0];
-                  s.parentNode.insertBefore(t,s)}(window, document,'script',
-                  'https://connect.facebook.net/en_US/fbevents.js');
-                  fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}');
-                  fbq('track', 'PageView');
-                `,
-              }}
-            />
-            <noscript>
-              <img
-                height="1"
-                width="1"
-                style={{ display: "none" }}
-                src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
-                alt=""
-              />
-            </noscript>
-          </>
-        )}
 
         <script
           type="application/ld+json"
@@ -260,6 +231,30 @@ export default function RootLayout({
                     "https://g.co/kgs/sPzai3",
                     "https://www.tripadvisor.com/Attraction_Review-g3577009-d27673880",
                   ],
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://www.udawalawasafari.lk/#website",
+                  name: "Udawalawe Safari by Nuwan",
+                  url: "https://www.udawalawasafari.lk/",
+                  description:
+                    "Official website for Udawalawe Safari by Nuwan. Book wildlife jeep tours and explore Udawalawe National Park, Sri Lanka.",
+                  publisher: {
+                    "@id": "https://www.udawalawasafari.lk/#business",
+                  },
+                },
+                {
+                  "@type": "WebPage",
+                  "@id": "https://www.udawalawasafari.lk/#webpage",
+                  url: "https://www.udawalawasafari.lk/",
+                  name: "Udawalawe Safari by Nuwan | Best Jeep Tours & Wildlife Safari Sri Lanka",
+                  isPartOf: {
+                    "@id": "https://www.udawalawasafari.lk/#website",
+                  },
+                  about: {
+                    "@id": "https://www.udawalawasafari.lk/#business",
+                  },
+                  inLanguage: "en",
                 },
                 {
                   "@type": "TouristTrip",
@@ -329,7 +324,6 @@ export default function RootLayout({
           }}
         />
 
-        <link rel="canonical" href="https://www.udawalawasafari.lk" />
         <meta name="theme-color" content="#c8a96b" />
         <meta name="msapplication-TileColor" content="#c8a96b" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -343,6 +337,57 @@ export default function RootLayout({
         <meta name="ICBM" content="6.4833, 80.8833" />
       </head>
       <body className={`font-sans ${inter.variable} ${playfair.variable}`}>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX"}`}
+          strategy="afterInteractive"
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-XXXXXXX"}', {
+                page_title: document.title,
+                page_location: window.location.href,
+              });
+            `,
+          }}
+        />
+
+        {process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID && (
+          <>
+            <Script
+              id="fb-pixel"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  !function(f,b,e,v,n,t,s)
+                  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                  n.queue=[];t=b.createElement(e);t.async=!0;
+                  t.src=v;s=b.getElementsByTagName(e)[0];
+                  s.parentNode.insertBefore(t,s)}(window, document,'script',
+                  'https://connect.facebook.net/en_US/fbevents.js');
+                  fbq('init', '${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}');
+                  fbq('track', 'PageView');
+                `,
+              }}
+            />
+            <noscript>
+              <img
+                height="1"
+                width="1"
+                style={{ display: "none" }}
+                src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID}&ev=PageView&noscript=1`}
+                alt=""
+              />
+            </noscript>
+          </>
+        )}
         <Suspense fallback={null}>{children}</Suspense>
       </body>
     </html>

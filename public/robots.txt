@@ -1,5 +1,5 @@
 # Udawalawe Safari - SEO Optimized robots.txt
-# Updated: 2025-11-25
+# Updated: 2026-02-15
 
 # Allow all major search engine crawlers
 User-agent: *
@@ -9,14 +9,12 @@ Allow: /*.webp$
 Allow: /*.jpg$
 Allow: /*.png$
 
-# Sitemap locations
-Sitemap: https://udawalawasafari.lk/sitemap.xml
+# Sitemap location
 Sitemap: https://www.udawalawasafari.lk/sitemap.xml
 
 # Specific instructions for Google
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0
 
 User-agent: Googlebot-Image
 Allow: /
@@ -24,7 +22,6 @@ Allow: /
 # Specific instructions for Bing
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 1
 
 # Block AI training bots (preserve content rights)
 User-agent: GPTBot
@@ -54,5 +51,4 @@ Disallow: /
 User-agent: FacebookBot
 Disallow: /
 
-# Crawl-delay for other bots
-Crawl-delay: 5
+# Crawl-delay intentionally omitted for faster indexing
