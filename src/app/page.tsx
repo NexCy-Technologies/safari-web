@@ -41,6 +41,9 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
   const [zoomedIndex, setZoomedIndex] = useState<number | null>(null)
   const [imageLoaded, setImageLoaded] = useState<Record<string, boolean>>({})
   const sectionRef = useRef<HTMLElement>(null)
+  const modalHeaderRef = useRef<HTMLDivElement | null>(null)
+  const modalFooterRef = useRef<HTMLDivElement | null>(null)
+  const [modalMaxHeight, setModalMaxHeight] = useState<string>('calc(100vh - 160px)')
 
   useEffect(() => {
     const loadImages = async () => {
@@ -102,6 +105,22 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
     return () => window.removeEventListener('keydown', handleKey)
   }, [zoomedIndex, allImages.length])
 
+  useEffect(() => {
+    // Recompute modal max height when zoom opens or on resize
+    const compute = () => {
+      if (typeof window === 'undefined') return
+      const h = modalHeaderRef.current?.getBoundingClientRect().height || 0
+      const f = modalFooterRef.current?.getBoundingClientRect().height || 0
+      const margin = 32 // extra breathing room
+      const available = Math.max(200, window.innerHeight - h - f - margin)
+      setModalMaxHeight(`${available}px`)
+    }
+
+    compute()
+    window.addEventListener('resize', compute)
+    return () => window.removeEventListener('resize', compute)
+  }, [zoomedIndex])
+
   if (error) {
     return (
       <section id="gallery" data-reveal className="py-20 text-center">
@@ -126,109 +145,119 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
         </div>
 
         <div className="max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8">
-          {/* Clean Header */}
-          <div className="mb-10">
-            <div className="inline-flex items-center gap-2 mb-3">
-              <div className="w-1 h-1 rounded-full bg-green-500" />
-              <span className="text-xs uppercase tracking-widest font-medium" style={{ color: isDark ? '#6fcf97' : '#2e6a46' }}>
-                Wildlife Gallery
+          {/* Premium Safari Header */}
+          <div className="mb-12 md:mb-16">
+            <div className="inline-flex items-center gap-2 mb-4">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs uppercase tracking-widest font-bold" style={{ color: isDark ? '#6fcf97' : '#2e6a46' }}>
+                🦁 WILDLIFE GALLERY
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-3" style={{ color: isDark ? '#ffffff' : '#0f2419' }}>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-4 leading-tight" style={{ color: isDark ? '#ffffff' : '#0f2419' }}>
               CAPTURED MOMENTS
             </h2>
-            <p className="text-base max-w-2xl" style={{ color: isDark ? 'rgba(255,255,255,0.6)' : 'rgba(16,35,26,0.6)' }}>
-              Every safari tells a unique story
+            <p className="text-base md:text-lg max-w-2xl" style={{ color: isDark ? 'rgba(255,255,255,0.65)' : 'rgba(16,35,26,0.65)' }}>
+              Every safari tells a unique story. Explore our curated collection of wildlife encounters and serene landscapes from Udawalawe National Park.
             </p>
           </div>
 
-          {/* Unique 6-Image Grid Layout */}
-          <div className="grid grid-cols-4 auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[260px] gap-3 sm:gap-4 md:gap-5 max-w-5xl mx-auto">
+          {/* Responsive Safari Gallery Grid - Optimized for all devices */}
+          <div className="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 auto-rows-[140px] xs:auto-rows-[160px] sm:auto-rows-[180px] md:auto-rows-[220px] lg:auto-rows-[240px] gap-2 xs:gap-3 sm:gap-4 md:gap-5 max-w-7xl mx-auto">
             {loading ? (
-              Array.from({ length: 6 }).map((_, i) => (
+              Array.from({ length: 12 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`rounded-xl overflow-hidden animate-pulse ${
-                    i === 0 ? 'col-span-4 sm:col-span-2 row-span-2' : 
-                    i === 1 ? 'col-span-4 sm:col-span-2 row-span-1' : 
-                    i === 2 ? 'col-span-4 sm:col-span-2 row-span-1' : 
-                    'col-span-2 sm:col-span-1 row-span-1'
-                  }`}
+                  className="rounded-xl overflow-hidden animate-pulse"
                   style={{ 
                     background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'
                   }}
                 />
               ))
             ) : (
-              allImages.slice(0, 6).map((img, index) => (
-                <div
-                  key={img.id}
-                  className={`cursor-pointer group relative rounded-xl overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
-                    index === 0 ? 'col-span-4 sm:col-span-2 row-span-2' : 
-                    index === 1 ? 'col-span-4 sm:col-span-2 row-span-1' : 
-                    index === 2 ? 'col-span-4 sm:col-span-2 row-span-1' : 
-                    'col-span-2 sm:col-span-1 row-span-1'
-                  }`}
-                  onClick={() => openZoom(index)}
-                  style={{
-                    background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)',
-                    border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`
-                  }}
-                >
-                  {/* Skeleton Loader */}
-                  {!imageLoaded[img.id] && (
-                    <div className="absolute inset-0 animate-pulse z-10" style={{
-                      background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'
-                    }}>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Icon icon="mdi:image" className="w-12 h-12 opacity-20" style={{ color: isDark ? '#fff' : '#000' }} />
+              allImages.slice(0, 12).map((img, index) => {
+                // Safari-themed responsive grid pattern
+                const isXs = index < 4; // Mobile first 4 images
+                const isMobile = allImages.slice(0, 4).includes(img); // First 4
+                
+                return (
+                  <div
+                    key={img.id}
+                    className={`cursor-pointer group relative rounded-xl overflow-hidden transition-all duration-500 hover:scale-105 hover:z-10 ${
+                      // Create dynamic safari pattern - featured images larger
+                      (index === 0 || index === 5) ? 'xs:col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2 xl:col-span-2 row-span-2' :
+                      (index === 1 || index === 3 || index === 7) ? 'row-span-2' :
+                      ''
+                    }`}
+                    onClick={() => openZoom(index)}
+                    style={{
+                      background: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.02)',
+                      border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {/* Enhanced Loading State */}
+                    {!imageLoaded[img.id] && (
+                      <div className="absolute inset-0 animate-pulse z-10 flex items-center justify-center" style={{
+                        background: isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'
+                      }}>
+                        <Icon icon="mdi:image-multiple" className="w-8 h-8 opacity-20" style={{ color: isDark ? '#fff' : '#000' }} />
+                      </div>
+                    )}
+                    
+                    {/* Safari-themed Image with Enhanced Effects */}
+                    <img
+                      src={img.imageUrl}
+                      alt={img.alt}
+                      className={`w-full h-auto object-cover transition-all duration-700 group-hover:scale-110 ${
+                        imageLoaded[img.id] ? 'opacity-100' : 'opacity-0'
+                      }`
+                      }
+                      style={{ filter: isDark ? 'brightness(0.92) contrast(1.05)' : 'brightness(1) contrast(1.02)' }}
+                      loading="lazy"
+                      onLoad={() => setImageLoaded(prev => ({ ...prev, [img.id]: true }))}
+                    />
+                    
+                    {/* Safari Gradient Overlay on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Safari Animals Badge + Zoom Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center backdrop-blur-sm" style={{ background: 'rgba(63,140,93,0.9)' }}>
+                        <Icon icon="mdi:magnify-plus-outline" className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                       </div>
                     </div>
-                  )}
-                  <Image
-                    src={img.imageUrl}
-                    alt={img.alt}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                    className={`object-cover transition-all duration-500 group-hover:scale-110 ${
-                      imageLoaded[img.id] ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    style={{ filter: isDark ? 'brightness(0.9)' : 'brightness(1)' }}
-                    loading="lazy"
-                    onLoad={() => setImageLoaded(prev => ({ ...prev, [img.id]: true }))}
-                    unoptimized
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center backdrop-blur-sm" style={{ background: 'rgba(63,140,93,0.9)' }}>
-                      <Icon icon="mdi:magnify-plus" className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-                    </div>
+                    
+                    {/* Enhanced Description with Safari Theme */}
+                    {img.description && (
+                      <div className="absolute bottom-0 left-0 right-0 p-2 xs:p-3 sm:p-4 bg-gradient-to-t from-black/95 via-black/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                        <div className="flex items-start gap-2">
+                          <span className="text-lg xs:text-xl">🌿</span>
+                          <p className="text-white text-xs sm:text-sm font-medium line-clamp-2 leading-tight">{img.description}</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  {img.description && (
-                    <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 bg-gradient-to-t from-black via-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                      <p className="text-white text-xs sm:text-sm font-medium line-clamp-2">{img.description}</p>
-                    </div>
-                  )}
-                </div>
-              ))
+                )
+              })
             )}
           </div>
 
-          {/* View All Button - Only if more than 6 images */}
+          {/* View All Button - Enhanced Safari Style */}
           {!loading && allImages.length > 6 && (
-            <div className="text-center mt-8 sm:mt-10">
+            <div className="text-center mt-10 sm:mt-12 md:mt-16">
               <button
                 onClick={() => setShowAllModal(true)}
-                className="group px-8 sm:px-10 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all hover:scale-105"
+                className="group relative px-8 sm:px-12 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all hover:scale-105 active:scale-95 overflow-hidden"
                 style={{
                   background: isDark ? 'linear-gradient(135deg, #3f8c5d, #2e6a46)' : 'linear-gradient(135deg, #4fae6e, #3a8853)',
                   color: '#ffffff',
                   boxShadow: '0 8px 24px rgba(63, 140, 93, 0.3)'
                 }}
               >
-                <span className="flex items-center gap-2">
-                  <Icon icon="mdi:grid" className="w-5 h-5" />
-                  View All {allImages.length} Photos
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400/0 via-green-400/30 to-green-400/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                <span className="relative flex items-center gap-2">
+                  <Icon icon="mdi:image-multiple" className="w-5 h-5" />
+                  Explore All {allImages.length} Photos
                 </span>
               </button>
             </div>
@@ -236,32 +265,41 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
         </div>
       </section>
 
-      {/* View All Modal - Grid View */}
+      {/* Enhanced View All Modal with Better Grid Layout */}
       {showAllModal && (
         <div
-          className="fixed inset-0 bg-black/95 z-[9999] overflow-y-auto"
+          className="fixed inset-0 z-[9999] overflow-y-auto animate-modal-backdrop-enter"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.92)',
+            backdropFilter: 'blur(8px)'
+          }}
           onClick={() => setShowAllModal(false)}
         >
-          <div className="min-h-screen py-8 px-4">
+          <div className="min-h-screen py-8 px-4 sm:px-6 md:px-8">
             <div className="max-w-7xl mx-auto">
-              <div className="flex justify-between items-center mb-8 sticky top-0 bg-black/90 backdrop-blur-sm py-4 z-10">
-                <h3 className="text-2xl sm:text-3xl font-black text-white">
-                  All Photos ({allImages.length})
-                </h3>
+              {/* Enhanced Modal Header */}
+              <div className="flex justify-between items-center mb-10 sticky top-0 bg-black/80 backdrop-blur-md py-4 z-10 rounded-lg px-6 mb-6 animate-slide-up">
+                <div>
+                  <h3 className="text-3xl sm:text-4xl font-black text-white mb-2">
+                    🦁 Safari Gallery
+                  </h3>
+                  <p className="text-sm text-white/60">All {allImages.length} captured moments</p>
+                </div>
                 <button
                   onClick={() => setShowAllModal(false)}
-                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                  className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
                   aria-label="Close"
                 >
-                  <Icon icon="mdi:close" className="w-7 h-7 text-white" />
+                  <Icon icon="mdi:close" className="w-7 h-7 text-white group-hover:rotate-90 transition-transform duration-300" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5" onClick={(e) => e.stopPropagation()}>
+              {/* Responsive Gallery Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5" onClick={(e) => e.stopPropagation()}>
                 {allImages.map((img, index) => (
                   <div
                     key={img.id}
-                    className="cursor-pointer group relative rounded-xl overflow-hidden aspect-square transition-all duration-300 hover:scale-[1.02]"
+                    className="cursor-pointer group relative rounded-lg overflow-hidden aspect-square transition-all duration-300 hover:scale-105 hover:shadow-xl animate-fade-in-scale"
                     onClick={(e) => {
                       e.stopPropagation()
                       setShowAllModal(false)
@@ -269,26 +307,43 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
                     }}
                     style={{
                       background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.1)'
+                      border: '1px solid rgba(255,255,255,0.1)',
+                      animationDelay: `${index * 30}ms`
                     }}
                   >
+                    {/* Enhanced Image Loading */}
+                    {!imageLoaded[img.id] && (
+                      <div className="absolute inset-0 animate-pulse flex items-center justify-center z-10" style={{
+                        background: 'rgba(255,255,255,0.05)'
+                      }}>
+                        <Icon icon="mdi:image" className="w-8 h-8 opacity-20 text-white" />
+                      </div>
+                    )}
+
                     <Image
                       src={img.imageUrl}
                       alt={img.alt}
                       fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-all duration-500 group-hover:scale-110"
+                      sizes="(max-width: 375px) 50vw, (max-width: 640px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+                      className="object-cover transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
                       unoptimized
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    
+                    {/* Safari Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    {/* Zoom Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
                       <div className="w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-sm" style={{ background: 'rgba(63,140,93,0.9)' }}>
-                        <Icon icon="mdi:magnify-plus" className="w-6 h-6 text-white" />
+                        <Icon icon="mdi:magnify-plus-outline" className="w-6 h-6 text-white" />
                       </div>
                     </div>
+                    
+                    {/* Description on Hover */}
                     {img.description && (
                       <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-black via-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                        <p className="text-white text-xs font-medium line-clamp-2">{img.description}</p>
+                        <p className="text-white text-xs font-medium line-clamp-2 leading-tight">{img.description}</p>
                       </div>
                     )}
                   </div>
@@ -299,57 +354,107 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
         </div>
       )}
 
-      {/* Zoom Modal */}
+      {/* Full-Screen Responsive Zoom Modal with Safari Theme */}
       {zoomedIndex !== null && allImages[zoomedIndex] && (
         <div
-          className="fixed inset-0 bg-black/95 z-[9999] flex items-center justify-center p-4 pt-24"
+          className="fixed inset-0 z-[9999] animate-modal-backdrop-enter overflow-hidden"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.92)',
+            backdropFilter: 'blur(8px)',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
           onClick={closeZoom}
         >
-          <button
-            onClick={closeZoom}
-            className="absolute top-24 right-4 sm:right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors z-10"
-            aria-label="Close"
+          {/* Responsive Header Bar */}
+          <div 
+            ref={modalHeaderRef}
+            className="flex items-center justify-between px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-5 border-b border-white/10"
+            style={{ background: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(10px)' }}
           >
-            <Icon icon="mdi:close" className="w-7 h-7 text-white" />
-          </button>
-
-          <button
-            onClick={(e) => { e.stopPropagation(); navigateZoom('prev') }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-            aria-label="Previous"
-          >
-            <Icon icon="mdi:chevron-left" className="w-7 h-7 text-white" />
-          </button>
-
-          <button
-            onClick={(e) => { e.stopPropagation(); navigateZoom('next') }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-            aria-label="Next"
-          >
-            <Icon icon="mdi:chevron-right" className="w-7 h-7 text-white" />
-          </button>
-
-          <div className="relative max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="relative w-full aspect-[4/3] max-h-[85vh]">
-              <Image
-                src={allImages[zoomedIndex].imageUrl}
-                alt={allImages[zoomedIndex].alt}
-                fill
-                className="object-contain"
-                quality={90}
-                priority
-                unoptimized
-              />
+            {/* Counter Badge - Mobile First */}
+            <div className="flex items-center gap-1.5 xs:gap-2 bg-black/70 backdrop-blur-sm px-2.5 xs:px-3 sm:px-4 py-1.5 xs:py-2 rounded-full text-white font-medium">
+              <span className="text-base xs:text-lg sm:text-xl">🦁</span>
+              <span className="text-xs xs:text-sm sm:text-base">{zoomedIndex + 1} / {allImages.length}</span>
             </div>
+
+            {/* Close Button - Mobile First */}
+            <button
+              onClick={closeZoom}
+              className="p-1.5 xs:p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+              aria-label="Close"
+            >
+              <Icon icon="mdi:close" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 text-white group-hover:rotate-90 transition-transform duration-300" />
+            </button>
+          </div>
+
+          {/* Image Container - Responsive Center */}
+          <div 
+            className="flex-1 flex items-center justify-center relative px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-6 overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Left Navigation Button - Mobile Responsive */}
+            <button
+              onClick={(e) => { e.stopPropagation(); navigateZoom('prev') }}
+              className="absolute left-1 xs:left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 p-1.5 xs:p-2 sm:p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
+              aria-label="Previous image"
+            >
+              <Icon icon="mdi:chevron-left" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white group-hover:-translate-x-1 transition-transform" />
+            </button>
+
+            {/* Responsive Image Container */}
+            <div className="relative w-full h-full max-w-6xl animate-zoom-in-smooth flex items-center justify-center">
+              <div className="w-full flex items-center justify-center">
+                <img
+                  src={allImages[zoomedIndex].imageUrl}
+                  alt={allImages[zoomedIndex].alt}
+                  className="object-contain rounded-lg sm:rounded-xl"
+                  style={{
+                    display: 'block',
+                    animation: 'image-scale-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    maxWidth: '95vw',
+                    maxHeight: modalMaxHeight,
+                    width: 'auto',
+                    height: 'auto',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Right Navigation Button - Mobile Responsive */}
+            <button
+              onClick={(e) => { e.stopPropagation(); navigateZoom('next') }}
+              className="absolute right-1 xs:right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-1.5 xs:p-2 sm:p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
+              aria-label="Next image"
+            >
+              <Icon icon="mdi:chevron-right" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Responsive Footer with Description */}
+          <div 
+            ref={modalFooterRef}
+            className="px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-6 border-t border-white/10 bg-black/40 backdrop-blur-sm flex flex-col xs:flex-row items-center justify-between gap-3 xs:gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Description */}
             {allImages[zoomedIndex].description && (
-              <div className="mt-4 text-center">
-                <p className="text-white text-sm sm:text-base bg-black/50 inline-block px-6 py-3 rounded-full">
-                  {allImages[zoomedIndex].description}
-                </p>
+              <div className="flex-1 text-center xs:text-left">
+                <div className="text-xs xs:text-sm sm:text-base text-white/90 font-medium flex items-center justify-center xs:justify-start gap-2">
+                  <span className="text-sm xs:text-base sm:text-lg">🌿</span>
+                  <span className="line-clamp-2">{allImages[zoomedIndex].description}</span>
+                </div>
               </div>
             )}
-            <div className="absolute top-2 left-2 bg-black/70 px-4 py-2 rounded-full text-white text-sm">
-              {zoomedIndex + 1} / {allImages.length}
+
+            {/* Keyboard Hints - Responsive Text */}
+            <div className="flex items-center gap-2 xs:gap-3 text-white/50 whitespace-nowrap flex-shrink-0">
+              <span className="hidden md:inline text-xs">←</span>
+              <span className="text-xs xs:text-sm hidden sm:inline">Navigate</span>
+              <span className="hidden md:inline text-xs">→</span>
+              <span className="text-xs hidden sm:inline">•</span>
+              <span className="text-xs xs:text-sm">ESC</span>
             </div>
           </div>
         </div>
@@ -978,81 +1083,87 @@ export default function Home() {
           }}
         >
           <div className="max-w-5xl">
-            {/* Minimalist Badge */}
-            <div className="mb-4 sm:mb-6 md:mb-8 inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full backdrop-blur-md" 
+            {/* Premium Animated Badge */}
+            <div className="mb-4 sm:mb-6 md:mb-8 inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full backdrop-blur-md animate-slide-up" 
               style={{
                 background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.25)',
-                border: isDark ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(255,255,255,0.4)'
+                border: isDark ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(255,255,255,0.4)',
+                animationDelay: '0ms'
               }}
             >
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse" />
               <span className="text-[10px] xs:text-xs sm:text-sm font-medium tracking-wider sm:tracking-widest uppercase" style={{ color: isDark ? 'rgba(255,255,255,0.9)' : '#ffffff' }}>Udawalawe Safari Service by Nuwan</span>
             </div>
 
-            {/* Bold, Clean Typography */}
+            {/* Premium Animated Typography */}
             <h1 className="mb-5 sm:mb-7">
               <span
-                className="block font-light uppercase tracking-wide"
+                className="block font-light uppercase tracking-wide animate-slide-up"
                 style={{
                   color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.95)',
                   fontSize: 'clamp(0.85rem, 2.6vw, 1.75rem)',
                   letterSpacing: '0.18em',
-                  marginBottom: 'clamp(0.4rem, 1.5vw, 1rem)'
+                  marginBottom: 'clamp(0.4rem, 1.5vw, 1rem)',
+                  animationDelay: '100ms'
                 }}
               >
                 Experience
               </span>
               <span
-                className="block font-black"
+                className="block font-black animate-slide-up"
                 style={{
                   color: '#ffffff',
                   fontSize: 'clamp(3rem, 10vw, 11rem)',
                   lineHeight: 0.92,
                   marginBottom: 'clamp(0.6rem, 1.8vw, 1.4rem)',
-                  textShadow: isDark ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.3)'
+                  textShadow: isDark ? '0 4px 20px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.3)',
+                  animationDelay: '200ms'
                 }}
               >
                 WILD
                 <br />
                 <span
-                  className="bg-clip-text text-transparent"
+                  className="bg-clip-text text-transparent animate-text-shimmer"
                   style={{
                     backgroundImage: 'linear-gradient(135deg, #6fcf97 0%, #3f8c5d 50%, #90ee90 100%)',
-                    WebkitTextStroke: isDark ? '2px rgba(255,255,255,0.1)' : '2px rgba(255,255,255,0.15)'
+                    WebkitTextStroke: isDark ? '2px rgba(255,255,255,0.1)' : '2px rgba(255,255,255,0.15)',
+                    backgroundSize: '200% 100%'
                   }}
                 >
                   SAFARI
                 </span>
               </span>
               <span
-                className="block font-light tracking-wide"
+                className="block font-light tracking-wide animate-slide-up"
                 style={{
                   color: isDark ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.95)',
-                  fontSize: 'clamp(0.95rem, 2.5vw, 1.9rem)'
+                  fontSize: 'clamp(0.95rem, 2.5vw, 1.9rem)',
+                  animationDelay: '300ms'
                 }}
               >
                 Udawalawe National Park, Sri Lanka
               </span>
             </h1>
 
-            {/* Clean Description */}
+            {/* Animated Description */}
             <p
-              className="font-light max-w-2xl leading-relaxed mb-6 sm:mb-8 md:mb-10"
+              className="font-light max-w-2xl leading-relaxed mb-6 sm:mb-8 md:mb-10 animate-slide-up"
               style={{
                 color: isDark ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.95)',
-                fontSize: 'clamp(0.95rem, 2.7vw, 1.5rem)'
+                fontSize: 'clamp(0.95rem, 2.7vw, 1.5rem)',
+                animationDelay: '400ms'
               }}
             >
               Experience raw nature with majestic elephants, exotic birds, and untamed wilderness.
             </p>
 
-            {/* Modern CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 md:mb-16">
+            {/* Animated Modern CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12 md:mb-16 animate-slide-up" style={{ animationDelay: '500ms' }}>
               <a
                 href="https://wa.me/94776103421?text=I'm%20interested%20in%20booking%20a%20safari"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105"
+                className="group relative rounded-full font-bold overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
                   background: 'linear-gradient(135deg, #3f8c5d, #2e6a46)',
                   boxShadow: '0 10px 40px rgba(63,140,93,0.4)',
@@ -1070,7 +1181,7 @@ export default function Home() {
               
               <button
                 onClick={() => scrollTo("packages")}
-                className="group rounded-full font-semibold backdrop-blur-md border-2 transition-all duration-300 hover:scale-105"
+                className="group rounded-full font-semibold backdrop-blur-md border-2 transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
                   background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(255,255,255,0.25)',
                   borderColor: isDark ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.5)',
@@ -1087,14 +1198,18 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Minimal Stats */}
-            <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8">
+            {/* Animated Stats with Stagger Effect */}
+            <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 animate-slide-up" style={{ animationDelay: '600ms' }}>
               {[
                 { value: '500+', label: 'Wild Elephants' },
                 { value: '500+', label: 'Happy Travelers' },
                 { value: '7+', label: 'Years Experience' }
               ].map((stat, i) => (
-                <div key={i} className="relative">
+                <div key={i} className="relative" style={{
+                  animation: `slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
+                  animationDelay: `${700 + i * 100}ms`,
+                  opacity: 0
+                }}>
                   <div className="text-2xl xs:text-3xl sm:text-4xl font-black mb-1" style={{ color: '#ffffff', textShadow: isDark ? 'none' : '0 2px 8px rgba(0,0,0,0.3)' }}>{stat.value}</div>
                   <div className="text-xs sm:text-sm uppercase tracking-wider font-medium" style={{ color: isDark ? 'rgba(255,255,255,0.7)' : 'rgba(255,255,255,0.9)' }}>{stat.label}</div>
                   {i < 2 && <div className="hidden sm:block absolute right-[-0.75rem] md:right-[-1rem] top-1/2 -translate-y-1/2 w-px h-8 sm:h-10 md:h-12" style={{ background: isDark ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.4)' }} />}
@@ -1104,36 +1219,36 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Sleek Navigation Dots */}
+        {/* Premium Animated Navigation Dots */}
         <div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-20"
-          style={{ transform: `translate(-50%, ${-heroContentParallax * 0.2}px)` }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-20 animate-fade-in-scale"
+          style={{ transform: `translate(-50%, ${-heroContentParallax * 0.2}px)`, animationDelay: '700ms' }}
         >
           {heroImages.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentHero(index)}
-              className="group relative"
+              className="group relative transition-all duration-300"
               aria-label={`View image ${index + 1}`}
             >
               <div 
-                className={`transition-all duration-300 ${
+                className={`transition-all duration-500 ${
                   index === currentHero 
-                    ? 'w-12 h-1.5 bg-white rounded-full' 
-                    : 'w-1.5 h-1.5 bg-white/40 rounded-full hover:bg-white/60'
+                    ? 'w-12 h-1.5 bg-white rounded-full shadow-lg shadow-green-500/50' 
+                    : 'w-1.5 h-1.5 bg-white/40 rounded-full hover:bg-white/70 hover:scale-125'
                 }`}
               />
             </button>
           ))}
         </div>
 
-        {/* Scroll Indicator */}
+        {/* Premium Animated Scroll Indicator */}
         <div
-          className="absolute bottom-24 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 text-white/60"
-          style={{ opacity: 1 - easeOut * 0.7 }}
+          className="absolute bottom-24 left-1/2 -translate-x-1/2 animate-bounce hidden md:flex flex-col items-center gap-2 text-white/60 animate-fade-in-scale"
+          style={{ opacity: 1 - easeOut * 0.7, animationDelay: '800ms' }}
         >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <Icon icon="mdi:chevron-down" className="w-6 h-6" />
+          <span className="text-xs uppercase tracking-widest font-medium">Scroll to explore</span>
+          <Icon icon="mdi:chevron-down" className="w-6 h-6 animate-bounce" />
         </div>
       </section>
 
@@ -1793,4 +1908,4 @@ export default function Home() {
       `}</style>
     </div>
   )
-}
+}// touch

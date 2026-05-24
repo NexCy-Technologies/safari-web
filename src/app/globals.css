@@ -285,3 +285,154 @@ img {
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' opacity='0.08' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* Masonry / responsive gallery layout */
+.masonry {
+  column-gap: 1rem;
+  column-fill: balance;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.masonry img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform .45s cubic-bezier(.16,1,.3,1);
+}
+
+@media (min-width: 640px) {
+  .masonry { column-count: 2; }
+}
+@media (min-width: 880px) {
+  .masonry { column-count: 3; }
+}
+@media (min-width: 1200px) {
+  .masonry { column-count: 4; }
+}
+
+/* Premium motion animations for hero section */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(63, 140, 93, 0.4), 0 0 40px rgba(63, 140, 93, 0.2); }
+  50% { box-shadow: 0 0 30px rgba(63, 140, 93, 0.6), 0 0 60px rgba(63, 140, 93, 0.3); }
+}
+
+@keyframes text-shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoom-in-smooth {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gallery-image-zoom {
+  from {
+    transform: scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes modal-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Gallery image hover effects */
+@keyframes image-scale-up {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+
+@keyframes image-brightness-up {
+  from { filter: brightness(1) saturate(1); }
+  to { filter: brightness(1.1) saturate(1.15); }
+}
+
+/* Utility animation classes */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-text-shimmer {
+  animation: text-shimmer 3s infinite;
+  background-size: 1000px 100%;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.5s ease-out forwards;
+}
+
+.animate-zoom-in-smooth {
+  animation: zoom-in-smooth 0.4s ease-out forwards;
+}
+
+.animate-gallery-image-zoom {
+  animation: gallery-image-zoom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-modal-backdrop-enter {
+  animation: modal-backdrop-enter 0.3s ease-out forwards;
+}
