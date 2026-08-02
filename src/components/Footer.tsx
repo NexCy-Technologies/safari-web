@@ -65,7 +65,8 @@ export default function Footer({ theme }: FooterProps) {
                   label: "TripAdvisor" 
                 },
                 { icon: "mdi:google", link: "https://share.google/C3sQMnXHqLIARdsWc", label: "Google Business" },
-                { icon: "mdi:whatsapp", link: "https://wa.me/94776103421", label: "WhatsApp" }
+                { icon: "mdi:whatsapp", link: "https://wa.me/94776103421", label: "WhatsApp" },
+                { icon: "mdi:telegram", link: "https://t.me/+94776103421", label: "Telegram" }
               ].map((social, idx) => (
                 <motion.a
                   whileHover={{ scale: 1.1, rotate: 5 }}

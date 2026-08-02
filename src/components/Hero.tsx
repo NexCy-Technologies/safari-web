@@ -129,7 +129,7 @@ export default function Hero({ theme, onOpenBooking }: HeroProps) {
         <motion.p variants={itemVariants} className={`text-sm sm:text-base md:text-lg max-w-2xl font-sans mb-8 sm:mb-10 leading-relaxed ${
           isDark ? "text-emerald-100/90" : "text-emerald-900/90 font-medium"
         }`}>
-          Witness 100+ wild Asian elephants, leopards & exotic birds in their natural habitat. Guided by certified local safari expert Nuwan with custom 4x4 open-top jeeps.
+          Witness 100+ wild Asian elephants, leopards & <strong className={isDark ? "text-amber-400 font-bold" : "text-amber-600 font-bold"}>250+ exotic birds</strong> in their natural habitat. Guided by certified local safari expert Nuwan with custom 4x4 open-top jeeps.
         </motion.p>
 
         {/* Action Buttons */}
