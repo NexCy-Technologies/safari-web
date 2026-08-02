@@ -1,47 +1,36 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-  // Static export for Firebase hosting
-  output: 'export',
-  
-  // Enable React strict mode
+  // Strict mode & performance
   reactStrictMode: true,
+
+  // Allow local network IP testing in development mode
+  allowedDevOrigins: [
+    "localhost:3000",
+    "192.168.1.136",
+    "192.168.1.136:3000",
+  ],
   
-  // Build configuration
-  eslint: {
-    ignoreDuringBuilds: true, // Ignore ESLint errors during production build
-  },
-  typescript: {
-    ignoreBuildErrors: true, // Ignore TypeScript errors during build
-  },
-  
-  // Image optimization configuration
-  // IMPORTANT: For static exports, unoptimized MUST be true
+  // Image optimization configuration for Vercel
   images: {
-    unoptimized: true, // Required for static export
-    domains: ["firebasestorage.googleapis.com"], // Allow Firebase images
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'firebasestorage.googleapis.com',
+      },
+    ],
   },
 
-  // Compiler options for better performance
+  // Compiler options
   compiler: {
-    // Remove console.log in production (keeps error and warn)
     removeConsole: process.env.NODE_ENV === 'production' ? {
       exclude: ['error', 'warn'],
     } : false,
-  },
-
-  // SWC minification is default in Next 15+; removed deprecated swcMinify key
-
-  // Disable source maps in production for smaller bundle
-  productionBrowserSourceMaps: false,
-
-  // Experimental features placeholder (add if needed)
-  // experimental: {},
-
-  // Reduce bundle size by tree-shaking unused code
-  webpack: (config) => {
-    // Add any custom webpack optimizations here
-    return config
   },
 }
 
