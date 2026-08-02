@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { Icon } from "@iconify/react"
 import { motion } from "framer-motion"
-import hero1 from "@/assets/hero1.webp"
+import heroBg from "@/assets/Gallery1.jpg"
 
 interface HeroProps {
   theme: "light" | "dark"
@@ -46,7 +46,7 @@ export default function Hero({ theme, onOpenBooking }: HeroProps) {
           className="absolute inset-0"
         >
           <Image
-            src={hero1}
+            src={heroBg}
             alt="Udawalawe Wild Elephants & Safari Jeep"
             fill
             priority

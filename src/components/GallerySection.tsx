@@ -71,40 +71,65 @@ export default function GallerySection({ theme }: GallerySectionProps) {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 md:auto-rows-[300px] gap-4 md:gap-6">
-          {galleryData.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              onClick={() => openZoom(index)}
-              className={`group relative rounded-3xl overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:z-10 transition-all duration-500 min-h-[250px] md:min-h-0 ${item.className || "col-span-1 row-span-1"}`}
-            >
-              <Image
-                src={item.image}
-                alt={item.alt}
-                fill
-                placeholder="blur"
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-              
-              <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <h3 className="text-lg md:text-2xl font-bold font-playfair text-white mb-2 transform opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                  {item.title}
-                </h3>
-                <p className="text-xs md:text-sm text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
-                  {item.description}
-                </p>
-              </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[120px] md:auto-rows-[250px] grid-flow-dense gap-2 md:gap-4">
+          {galleryData.map((item, index) => {
+            // Interlocking puzzle pattern
+            const desktopPattern = [
+              "md:col-span-2 md:row-span-2", // Large focus
+              "md:col-span-1 md:row-span-1", // Standard
+              "md:col-span-1 md:row-span-1", // Standard
+              "md:col-span-1 md:row-span-2", // Tall portrait
+              "md:col-span-1 md:row-span-1", // Standard
+              "md:col-span-2 md:row-span-1", // Wide landscape
+              "md:col-span-1 md:row-span-1", // Standard
+              "md:col-span-1 md:row-span-1", // Standard
+            ];
+            
+            const mobilePattern = [
+              "col-span-2 row-span-2",
+              "col-span-1 row-span-1",
+              "col-span-1 row-span-1",
+              "col-span-2 row-span-1",
+              "col-span-1 row-span-1",
+              "col-span-1 row-span-1",
+            ];
 
-              <div className="absolute top-4 right-4 md:top-6 md:right-6 p-3 rounded-full bg-white/10 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-500">
-                <Icon icon="mdi:arrow-top-right" className="w-5 h-5" />
-              </div>
-            </motion.div>
-          ))}
+            const gridClass = `${mobilePattern[index % mobilePattern.length]} ${desktopPattern[index % desktopPattern.length]}`;
+
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: (index % 8) * 0.1 }}
+                onClick={() => openZoom(index)}
+                className={`group relative rounded-xl md:rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-2xl hover:z-10 transition-all duration-500 ${gridClass}`}
+              >
+                <Image
+                  src={item.image}
+                  alt={item.alt}
+                  fill
+                  placeholder="blur"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                
+                <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                  <h3 className="text-sm md:text-xl font-bold font-playfair text-white mb-1 transform opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
+                    {item.title}
+                  </h3>
+                  <p className="hidden md:block text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">
+                    {item.description}
+                  </p>
+                </div>
+
+                <div className="absolute top-3 right-3 md:top-5 md:right-5 p-2 rounded-full bg-white/20 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 group-hover:rotate-90 transition-all duration-500">
+                  <Icon icon="mdi:arrow-top-right" className="w-4 h-4 md:w-5 md:h-5" />
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

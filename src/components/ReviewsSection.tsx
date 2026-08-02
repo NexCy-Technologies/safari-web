@@ -101,7 +101,13 @@ export default function ReviewsSection({ theme }: ReviewsSectionProps) {
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-500 text-[10px] font-bold tracking-wider uppercase">
-                  <Icon icon={rev.source === 'Google' ? 'mdi:google' : 'mdi:tripadvisor'} className="w-4 h-4" />
+                  {rev.source === 'Google' ? (
+                    <Icon icon="mdi:google" className="w-4 h-4" />
+                  ) : (
+                    <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                      <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 2a8 8 0 0 1 5.657 2.343l-1.414 1.414A6 6 0 0 0 12 6a6 6 0 0 0-4.243 1.757L6.343 6.343A8 8 0 0 1 12 4zm-4.5 4a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zm9 0a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7zm-9 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm9 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                    </svg>
+                  )}
                   <span>{rev.source}</span>
                 </div>
               </div>
