@@ -41,9 +41,6 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
   const [zoomedIndex, setZoomedIndex] = useState<number | null>(null)
   const [imageLoaded, setImageLoaded] = useState<Record<string, boolean>>({})
   const sectionRef = useRef<HTMLElement>(null)
-  const modalHeaderRef = useRef<HTMLDivElement | null>(null)
-  const modalFooterRef = useRef<HTMLDivElement | null>(null)
-  const [modalMaxHeight, setModalMaxHeight] = useState<string>('calc(100vh - 160px)')
 
   useEffect(() => {
     const loadImages = async () => {
@@ -104,22 +101,6 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
   }, [zoomedIndex, allImages.length])
-
-  useEffect(() => {
-    // Recompute modal max height when zoom opens or on resize
-    const compute = () => {
-      if (typeof window === 'undefined') return
-      const h = modalHeaderRef.current?.getBoundingClientRect().height || 0
-      const f = modalFooterRef.current?.getBoundingClientRect().height || 0
-      const margin = 32 // extra breathing room
-      const available = Math.max(200, window.innerHeight - h - f - margin)
-      setModalMaxHeight(`${available}px`)
-    }
-
-    compute()
-    window.addEventListener('resize', compute)
-    return () => window.removeEventListener('resize', compute)
-  }, [zoomedIndex])
 
   if (error) {
     return (
@@ -205,16 +186,18 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
                     )}
                     
                     {/* Safari-themed Image with Enhanced Effects */}
-                    <img
+                    <Image
                       src={img.imageUrl}
                       alt={img.alt}
-                      className={`w-full h-auto object-cover transition-all duration-700 group-hover:scale-110 ${
+                      fill
+                      sizes="(max-width: 375px) 50vw, (max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 20vw"
+                      className={`object-cover transition-all duration-700 group-hover:scale-110 ${
                         imageLoaded[img.id] ? 'opacity-100' : 'opacity-0'
-                      }`
-                      }
+                      }`}
                       style={{ filter: isDark ? 'brightness(0.92) contrast(1.05)' : 'brightness(1) contrast(1.02)' }}
                       loading="lazy"
                       onLoad={() => setImageLoaded(prev => ({ ...prev, [img.id]: true }))}
+                      unoptimized
                     />
                     
                     {/* Safari Gradient Overlay on Hover */}
@@ -354,107 +337,83 @@ const GallerySection = memo(({ theme }: { theme: ThemeMode }) => {
         </div>
       )}
 
-      {/* Full-Screen Responsive Zoom Modal with Safari Theme */}
+      {/* Enhanced Zoom Modal with Safari Theme */}
       {zoomedIndex !== null && allImages[zoomedIndex] && (
         <div
-          className="fixed inset-0 z-[9999] animate-modal-backdrop-enter overflow-hidden"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 pt-20 animate-modal-backdrop-enter"
           style={{
             backgroundColor: 'rgba(0, 0, 0, 0.92)',
-            backdropFilter: 'blur(8px)',
-            display: 'flex',
-            flexDirection: 'column'
+            backdropFilter: 'blur(8px)'
           }}
           onClick={closeZoom}
         >
-          {/* Responsive Header Bar */}
-          <div 
-            ref={modalHeaderRef}
-            className="flex items-center justify-between px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-5 border-b border-white/10"
-            style={{ background: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(10px)' }}
+          {/* Close Button with Animation */}
+          <button
+            onClick={closeZoom}
+            className="absolute top-6 sm:top-8 right-4 sm:right-6 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
+            aria-label="Close"
           >
-            {/* Counter Badge - Mobile First */}
-            <div className="flex items-center gap-1.5 xs:gap-2 bg-black/70 backdrop-blur-sm px-2.5 xs:px-3 sm:px-4 py-1.5 xs:py-2 rounded-full text-white font-medium">
-              <span className="text-base xs:text-lg sm:text-xl">🦁</span>
-              <span className="text-xs xs:text-sm sm:text-base">{zoomedIndex + 1} / {allImages.length}</span>
-            </div>
+            <Icon icon="mdi:close" className="w-7 h-7 text-white group-hover:rotate-90 transition-transform duration-300" />
+          </button>
 
-            {/* Close Button - Mobile First */}
-            <button
-              onClick={closeZoom}
-              className="p-1.5 xs:p-2 sm:p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group"
-              aria-label="Close"
-            >
-              <Icon icon="mdi:close" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-7 sm:h-7 text-white group-hover:rotate-90 transition-transform duration-300" />
-            </button>
+          {/* Image Counter with Safari Badge */}
+          <div className="absolute top-6 sm:top-8 left-4 sm:left-6 flex items-center gap-2 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm font-medium">
+            <span className="text-lg">🦁</span>
+            <span>{zoomedIndex + 1} / {allImages.length}</span>
           </div>
 
-          {/* Image Container - Responsive Center */}
-          <div 
-            className="flex-1 flex items-center justify-center relative px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-6 overflow-auto"
-            onClick={(e) => e.stopPropagation()}
+          {/* Navigation Buttons with Enhanced Hover States */}
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateZoom('prev') }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
+            aria-label="Previous"
           >
-            {/* Left Navigation Button - Mobile Responsive */}
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateZoom('prev') }}
-              className="absolute left-1 xs:left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 p-1.5 xs:p-2 sm:p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
-              aria-label="Previous image"
-            >
-              <Icon icon="mdi:chevron-left" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white group-hover:-translate-x-1 transition-transform" />
-            </button>
+            <Icon icon="mdi:chevron-left" className="w-8 h-8 text-white group-hover:-translate-x-1 transition-transform" />
+          </button>
 
-            {/* Responsive Image Container */}
-            <div className="relative w-full h-full max-w-6xl animate-zoom-in-smooth flex items-center justify-center">
-              <div className="w-full flex items-center justify-center">
-                <img
-                  src={allImages[zoomedIndex].imageUrl}
-                  alt={allImages[zoomedIndex].alt}
-                  className="object-contain rounded-lg sm:rounded-xl"
-                  style={{
-                    display: 'block',
-                    animation: 'image-scale-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    maxWidth: '95vw',
-                    maxHeight: modalMaxHeight,
-                    width: 'auto',
-                    height: 'auto',
-                    objectFit: 'contain'
-                  }}
-                />
-              </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); navigateZoom('next') }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
+            aria-label="Next"
+          >
+            <Icon icon="mdi:chevron-right" className="w-8 h-8 text-white group-hover:translate-x-1 transition-transform" />
+          </button>
+
+          {/* Enhanced Image Container with Smooth Zoom Animation */}
+          <div className="relative max-w-6xl w-full animate-zoom-in-smooth" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-h-[85vh] flex items-center justify-center">
+              <Image
+                src={allImages[zoomedIndex].imageUrl}
+                alt={allImages[zoomedIndex].alt}
+                width={1200}
+                height={900}
+                className="object-contain max-w-full max-h-[85vh] rounded-xl"
+                quality={95}
+                priority
+                unoptimized
+                style={{
+                  animation: 'image-scale-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                }}
+              />
             </div>
 
-            {/* Right Navigation Button - Mobile Responsive */}
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateZoom('next') }}
-              className="absolute right-1 xs:right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 p-1.5 xs:p-2 sm:p-3 md:p-4 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-110 group z-20"
-              aria-label="Next image"
-            >
-              <Icon icon="mdi:chevron-right" className="w-5 h-5 xs:w-6 xs:h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 text-white group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-
-          {/* Responsive Footer with Description */}
-          <div 
-            ref={modalFooterRef}
-            className="px-3 xs:px-4 sm:px-6 md:px-8 py-3 xs:py-4 sm:py-6 border-t border-white/10 bg-black/40 backdrop-blur-sm flex flex-col xs:flex-row items-center justify-between gap-3 xs:gap-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Description */}
+            {/* Enhanced Description with Safari Theme */}
             {allImages[zoomedIndex].description && (
-              <div className="flex-1 text-center xs:text-left">
-                <div className="text-xs xs:text-sm sm:text-base text-white/90 font-medium flex items-center justify-center xs:justify-start gap-2">
-                  <span className="text-sm xs:text-base sm:text-lg">🌿</span>
-                  <span className="line-clamp-2">{allImages[zoomedIndex].description}</span>
+              <div className="mt-6 text-center">
+                <div className="bg-black/70 backdrop-blur-sm inline-block px-6 sm:px-8 py-3 sm:py-4 rounded-full text-white text-sm sm:text-base font-medium border border-white/20">
+                  <span className="text-lg mr-2">🌿</span>
+                  {allImages[zoomedIndex].description}
                 </div>
               </div>
             )}
 
-            {/* Keyboard Hints - Responsive Text */}
-            <div className="flex items-center gap-2 xs:gap-3 text-white/50 whitespace-nowrap flex-shrink-0">
-              <span className="hidden md:inline text-xs">←</span>
-              <span className="text-xs xs:text-sm hidden sm:inline">Navigate</span>
-              <span className="hidden md:inline text-xs">→</span>
-              <span className="text-xs hidden sm:inline">•</span>
-              <span className="text-xs xs:text-sm">ESC</span>
+            {/* Keyboard Shortcut Hint */}
+            <div className="absolute bottom-0 left-0 right-0 flex justify-center gap-4 text-xs text-white/50 mt-4">
+              <span className="hidden sm:inline">← Previous</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="hidden sm:inline">ESC to close</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="hidden sm:inline">Next →</span>
             </div>
           </div>
         </div>
@@ -673,6 +632,8 @@ export default function Home() {
   const aboutRef = useRef<HTMLElement>(null)
   const packagesRef = useRef<HTMLElement>(null)
   const footerRef = useRef<HTMLElement>(null)
+  const heroRef = useRef<HTMLDivElement | null>(null)
+  const heroTiltRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -753,6 +714,59 @@ export default function Home() {
 
     elements.forEach((el) => revealObserver.observe(el))
     return () => revealObserver.disconnect()
+  }, [prefersReducedMotion])
+
+  useEffect(() => {
+    if (prefersReducedMotion || typeof window === 'undefined') return
+    const el = heroRef.current
+    const tiltEl = heroTiltRef.current
+    if (!el) return
+
+    let raf = 0
+    const handlePointer = (e: PointerEvent) => {
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const dx = (e.clientX - cx)
+      const dy = (e.clientY - cy)
+      // normalize to [-1,1]
+      const nx = Math.max(-1, Math.min(1, dx / (rect.width / 2)))
+      const ny = Math.max(-1, Math.min(1, dy / (rect.height / 2)))
+
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        // set CSS variables for parallax layers
+        el.style.setProperty('--px', `${nx * 28}px`)
+        el.style.setProperty('--py', `${ny * 18}px`)
+        if (tiltEl) {
+          const tiltY = nx * 6 // rotateY
+          const tiltX = -ny * 6 // rotateX (invert)
+          tiltEl.style.setProperty('--tilt-x', `${tiltX}deg`)
+          tiltEl.style.setProperty('--tilt-y', `${tiltY}deg`)
+        }
+      })
+    }
+
+    const handleLeave = () => {
+      if (!el) return
+      el.style.setProperty('--px', `0px`)
+      el.style.setProperty('--py', `0px`)
+      if (tiltEl) {
+        tiltEl.style.setProperty('--tilt-x', `0deg`)
+        tiltEl.style.setProperty('--tilt-y', `0deg`)
+      }
+    }
+
+    el.addEventListener('pointermove', handlePointer)
+    el.addEventListener('pointerleave', handleLeave)
+    el.addEventListener('pointercancel', handleLeave)
+    return () => {
+      el.removeEventListener('pointermove', handlePointer)
+      el.removeEventListener('pointerleave', handleLeave)
+      el.removeEventListener('pointercancel', handleLeave)
+      cancelAnimationFrame(raf)
+    }
   }, [prefersReducedMotion])
 
   const heroImages = [
@@ -870,7 +884,7 @@ export default function Home() {
       className="min-h-screen text-white font-sans antialiased relative"
       style={{ opacity: isThemeReady ? 1 : 0, transition: 'opacity 0.2s ease', pointerEvents: isThemeReady ? 'auto' : 'none' }}
     >
-      <div className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden>
+      <div ref={heroRef} className="fixed inset-0 pointer-events-none overflow-hidden" aria-hidden>
         <div
           className="absolute top-[5%] left-[3%] w-24 h-24 sm:w-32 sm:h-32 rounded-full blur-3xl"
           style={{ backgroundColor: isDark ? 'color-mix(in oklab, var(--lux-gold) 18%, transparent)' : 'color-mix(in oklab, var(--lux-gold) 32%, rgba(255,255,255,0.9))' }}
@@ -883,6 +897,31 @@ export default function Home() {
           className="absolute inset-0"
           style={{ background: isDark ? 'radial-gradient(1200px 700px at 80% -10%, rgba(63,140,93,0.16), transparent 60%)' : 'radial-gradient(1200px 700px at 80% -10%, rgba(141,216,135,0.25), transparent 60%)' }}
         />
+        {/* Decorative parallax layers */}
+        <div className="parallax-layer parallax-layer--slow hero-deco hero-leaf" style={{ top: '8%', left: '6%', width: 240, height: 240 }}>
+          <svg viewBox="0 0 64 64" width="100%" height="100%" className="blob" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stopColor="#6fcf97" />
+                <stop offset="1" stopColor="#3f8c5d" />
+              </linearGradient>
+            </defs>
+            <path d="M47.6,8.8c6,5.2,9.4,16.2,6.6,25.1s-11.1,15.6-21.6,17.5S12.2,54.7,6.9,46.6,4.9,26.9,11.1,18.8,38.8,3.6,47.6,8.8Z" fill="url(#g1)" opacity="0.95" />
+          </svg>
+        </div>
+        <div className="parallax-layer parallax-layer--mid hero-deco hero-bird" style={{ top: '18%', right: '8%', width: 140, height: 80 }}>
+          <svg viewBox="0 0 64 32" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <path d="M2 20 C14 4, 30 4, 40 18 C46 24, 58 26, 62 6" stroke="#ffffff" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.9" />
+          </svg>
+        </div>
+        <div className="parallax-layer parallax-layer--fast hero-deco hero-particles" style={{ bottom: '12%', left: '18%', width: 160, height: 160 }}>
+          <svg viewBox="0 0 64 64" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <circle cx="12" cy="8" r="2" fill="#fff" opacity="0.08" />
+            <circle cx="40" cy="24" r="3" fill="#fff" opacity="0.06" />
+            <circle cx="28" cy="48" r="1.8" fill="#fff" opacity="0.05" />
+            <circle cx="52" cy="12" r="1.5" fill="#fff" opacity="0.04" />
+          </svg>
+        </div>
         <div
           className="absolute inset-0"
           style={{
@@ -1075,7 +1114,8 @@ export default function Home() {
         {/* Clean Content */}
         <div
           data-reveal
-          className="relative z-10 w-full max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
+          ref={heroTiltRef}
+          className="hero-tilt relative z-10 w-full max-w-[2000px] mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16"
           style={{
             transform: `translateY(-${heroContentParallax}px)`,
             opacity: 1 - easeOut * 0.18,
@@ -1908,4 +1948,4 @@ export default function Home() {
       `}</style>
     </div>
   )
-}// touch
+}
