@@ -112,9 +112,6 @@ export const metadata: Metadata = {
   generator: "Next.js",
   referrer: "origin-when-cross-origin",
   authors: [{ name: "Nuwan - Udawalawe Safari Expert", url: "https://www.udawalawasafari.lk" }],
-  icons: {
-    icon: "/favicon.ico",
-  },
   openGraph: {
     type: "website",
     title: "Udawalawe Safari by Nuwan | #1 Wildlife Jeep Tours Sri Lanka",
@@ -122,14 +119,6 @@ export const metadata: Metadata = {
       "🐘 See 100+ wild elephants in natural habitat! Expert-guided jeep safaris in Udawalawe National Park. Leopards, sloth bears, 400+ birds. 5⭐ rated, affordable packages, instant WhatsApp booking. Best wildlife experience in Sri Lanka.",
     url: "https://www.udawalawasafari.lk",
     siteName: "Udawalawe Safari by Nuwan - Sri Lanka's Premier Wildlife Tours",
-    images: [
-      {
-        url: "https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png",
-        width: 1200,
-        height: 630,
-        alt: "Udawalawe Safari - Wild Elephants & Wildlife Tours in Sri Lanka",
-      },
-    ],
     locale: "en_US",
   },
   twitter: {
@@ -137,7 +126,6 @@ export const metadata: Metadata = {
     title: "Udawalawe Safari by Nuwan | Best Wildlife Jeep Tours Sri Lanka",
     description:
       "🐘 Expert-guided wildlife safaris in Udawalawe National Park. See 100+ elephants, leopards, sloth bears. 5-star reviews, affordable packages. Book your Sri Lanka safari adventure now!",
-    images: ["https://www.udawalawasafari.lk/udawalawe-safari-social-preview.png"],
     creator: "@NuwanSafari",
     site: "@NuwanSafari",
   },
