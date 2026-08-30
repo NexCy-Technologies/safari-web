@@ -11,17 +11,12 @@ const nextConfig: NextConfig = {
     "192.168.1.136:3000",
   ],
   
-  // Image optimization configuration for Vercel
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
       },
     ],
   },
