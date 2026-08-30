@@ -8,6 +8,7 @@ export interface Review {
   reviewText: string
   tripType: string
   source: 'Google' | 'TripAdvisor'
+  reviewUrl: string
 }
 
 export const REVIEWS: Review[] = [
@@ -20,6 +21,7 @@ export const REVIEWS: Review[] = [
     tripType: 'Couples Morning Safari',
     source: 'Google',
     reviewText: 'Nuwan is an incredible guide! We saw over 40 wild elephants including babies, peacocks, eagles, and crocodiles. His jeep is comfortable, high off the ground, and he respects wildlife distance.',
+    reviewUrl: 'https://share.google/ZWz22GUBHRrtKVAJV',
   },
   {
     id: 'rev-2',
@@ -30,6 +32,7 @@ export const REVIEWS: Review[] = [
     tripType: 'Full Day Safari',
     source: 'TripAdvisor',
     reviewText: 'Hands down the best safari operator in Udawalawe. Nuwan knew exactly where the animals would be without rushing. The breakfast by the reservoir was unforgettable.',
+    reviewUrl: 'https://www.tripadvisor.com/Attraction_Review-g3577009-d27673880-Reviews-Udawalawe_Jeep_Safari_Services-Udawalawa_Sabaragamuwa_Province.html',
   },
   {
     id: 'rev-3',
@@ -40,5 +43,6 @@ export const REVIEWS: Review[] = [
     tripType: 'Sunset Safari & Clay House Stay',
     source: 'Google',
     reviewText: 'Smooth booking over WhatsApp, super friendly service. Nuwan spotted animals way before any other jeep drivers. Highly recommend booking directly with him!',
+    reviewUrl: 'https://share.google/ZWz22GUBHRrtKVAJV',
   },
 ]
