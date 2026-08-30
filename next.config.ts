@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   // Strict mode & performance
   reactStrictMode: true,
 
+  experimental: {
+    useTypeScriptCli: true,
+  },
+
   // Allow local network IP testing in development mode
   allowedDevOrigins: [
     "localhost:3000",
